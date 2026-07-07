@@ -61,3 +61,15 @@ def edit_patient(request, id):
     return render(request, 'patients/edit_patient.html', {
         'form': form
     })
+
+def delete_patient(request, id):
+
+    patient = get_object_or_404(Patient, id=id)
+
+    if request.method == "POST":
+        patient.delete()
+        return redirect('patient_list')
+
+    return render(request, 'patients/delete_patient.html', {
+        'patient': patient
+    })
