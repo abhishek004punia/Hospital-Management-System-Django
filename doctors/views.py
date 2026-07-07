@@ -36,3 +36,23 @@ def doctor_detail(request, id):
     return render(request, 'doctors/doctor_detail.html', {
         'doctor': doctor
     })
+
+def edit_doctor(request, id):
+
+    doctor = get_object_or_404(Doctor, id=id)
+
+    if request.method == "POST":
+
+        form = DoctorForm(request.POST, instance=doctor)
+
+        if form.is_valid():
+            form.save()
+            return redirect('doctor_list')
+
+    else:
+
+        form = DoctorForm(instance=doctor)
+
+    return render(request, 'doctors/edit_doctor.html', {
+        'form': form
+    })
