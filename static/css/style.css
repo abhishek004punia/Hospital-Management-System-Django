@@ -3,7 +3,9 @@ body{
     font-family:Arial, Helvetica, sans-serif;
 }
 
+
 /* Sidebar */
+
 .sidebar{
     width:250px;
     height:100vh;
@@ -11,8 +13,10 @@ body{
     left:0;
     top:0;
     background:#0d6efd;
-    padding-top:20px;
+    padding:20px;
+    overflow-y:auto;
 }
+
 
 .sidebar h3{
     color:white;
@@ -20,32 +24,110 @@ body{
     margin-bottom:30px;
 }
 
+
 .sidebar .nav-link{
     color:white;
     padding:12px 20px;
     border-radius:8px;
     margin:5px 10px;
+    transition:0.3s;
 }
 
+
 .sidebar .nav-link:hover{
-    background:blue;
-    color:black;
+    background:white;
+    color:#0d6efd;
 }
+
+
+/* Main Content */
 
 .main-content{
     margin-left:250px;
     padding:20px;
+    min-height:100vh;
 }
+
+
+
+/* Cards */
+
 .card{
     border:none;
     border-radius:12px;
     transition:.3s;
 }
 
+
 .card:hover{
     transform:translateY(-5px);
 }
 
+
+
+/* Tables */
+
+.table-responsive{
+    overflow-x:auto;
+}
+
+
+table{
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+
+
+/* Headings */
+
 h1{
     color:#0d6efd;
+}
+
+
+/* Mobile Responsive */
+
+@media(max-width:768px){
+
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+    }
+
+
+    .main-content{
+        margin-left:0;
+        padding:15px;
+    }
+
+
+    .sidebar .nav-link{
+        text-align:center;
+    }
+
+
+    .card{
+        margin-bottom:15px;
+    }
+
+}
+
+
+/* Small Mobile */
+
+@media(max-width:480px){
+
+    body{
+        font-size:14px;
+    }
+
+
+    .main-content{
+        padding:10px;
+    }
+
+
 }

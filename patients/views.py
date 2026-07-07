@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PatientForm
+from .models import Patient
 
 
 def add_patient(request):
@@ -18,9 +19,27 @@ def add_patient(request):
         'form': form
     })
 
+
 def patient_list(request):
-    patients = Patient.objects.all()
+
+    search = request.GET.get('search')
+
+    if search:
+        patients = Patient.objects.filter(
+            full_name__icontains=search
+        )
+    else:
+        patients = Patient.objects.all()
+
 
     return render(request, 'patients/patient_list.html', {
         'patients': patients
+    })
+
+def patient_detail(request, id):
+
+    patient = get_object_or_404(Patient, id=id)
+
+    return render(request, 'patients/patient_detail.html', {
+        'patient': patient
     })
