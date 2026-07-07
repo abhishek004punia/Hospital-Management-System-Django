@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-5">
+        Hospital Management System
+    </h2>
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <div class="card shadow text-center p-3">
+                <h5>Patients</h5>
+                <h2>120</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow text-center p-3">
+                <h5>Doctors</h5>
+                <h2>18</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow text-center p-3">
+                <h5>Appointments</h5>
+                <h2>45</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow text-center p-3">
+                <h5>Billing</h5>
+                <h2>₹2,35,000</h2>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
