@@ -56,3 +56,17 @@ def edit_doctor(request, id):
     return render(request, 'doctors/edit_doctor.html', {
         'form': form
     })
+
+def delete_doctor(request, id):
+
+    doctor = get_object_or_404(Doctor, id=id)
+
+    if request.method == "POST":
+
+        doctor.delete()
+
+        return redirect('doctor_list')
+
+    return render(request, 'doctors/delete_doctor.html', {
+        'doctor': doctor
+    })

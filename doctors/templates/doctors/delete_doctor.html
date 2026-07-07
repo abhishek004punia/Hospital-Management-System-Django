@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Delete Doctor
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container-fluid mt-4">
+
+        <div class="card shadow border-danger">
+
+            <div class="card-header bg-danger text-white">
+                <h4>🗑️ Delete Doctor</h4>
+            </div>
+
+            <div class="card-body">
+
+                <h5 class="text-danger">
+                    Are you sure you want to delete this doctor?
+                </h5>
+
+                <hr>
+
+                <table class="table table-bordered">
+
+                    <tr>
+                        <th width="30%">Doctor ID</th>
+                        <td>{{ doctor.doctor_id }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Full Name</th>
+                        <td>{{ doctor.full_name }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Specialization</th>
+                        <td>{{ doctor.specialization }}</td>
+                    </tr>
+
+                </table>
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-danger">
+                        Yes, Delete
+                    </button>
+
+                    <a href="{% url 'doctor_list' %}" class="btn btn-secondary">
+                        Cancel
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
