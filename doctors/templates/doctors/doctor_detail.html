@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Doctor Details
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container-fluid mt-4">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-info text-white">
+                <h4>👨‍⚕️ Doctor Details</h4>
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-bordered">
+
+                    <tr>
+                        <th width="30%">Doctor ID</th>
+                        <td>{{ doctor.doctor_id }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Full Name</th>
+                        <td>{{ doctor.full_name }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Specialization</th>
+                        <td>{{ doctor.specialization }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Qualification</th>
+                        <td>{{ doctor.qualification }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Experience</th>
+                        <td>{{ doctor.experience }} Years</td>
+                    </tr>
+
+                    <tr>
+                        <th>Mobile</th>
+                        <td>{{ doctor.mobile }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ doctor.email }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Address</th>
+                        <td>{{ doctor.address }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Joining Date</th>
+                        <td>{{ doctor.joining_date }}</td>
+                    </tr>
+
+                </table>
+
+                <a href="{% url 'doctor_list' %}" class="btn btn-secondary">
+                    ← Back to List
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
