@@ -43,3 +43,21 @@ def patient_detail(request, id):
     return render(request, 'patients/patient_detail.html', {
         'patient': patient
     })
+
+def edit_patient(request, id):
+
+    patient = get_object_or_404(Patient, id=id)
+
+    if request.method == "POST":
+        form = PatientForm(request.POST, instance=patient)
+
+        if form.is_valid():
+            form.save()
+            return redirect('patient_list')
+
+    else:
+        form = PatientForm(instance=patient)
+
+    return render(request, 'patients/edit_patient.html', {
+        'form': form
+    })
