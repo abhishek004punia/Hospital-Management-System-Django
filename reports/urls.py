@@ -26,4 +26,6 @@ urlpatterns = [
         views.appointment_report,
         name="appointment_report"
     ),
+
+    path("billing/", views.billing_report, name="billing_report"),
 ]

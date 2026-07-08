@@ -62,3 +62,28 @@ def appointment_report(request):
             "appointments": appointments
         }
     )
+
+def billing_report(request):
+
+    bills = Billing.objects.all()
+
+    total_revenue = sum(bill.total_amount for bill in bills)
+
+    paid_bills = bills.filter(payment_status="Paid").count()
+
+    pending_bills = bills.filter(payment_status="Pending").count()
+
+    context = {
+
+        "bills": bills,
+        "total_revenue": total_revenue,
+        "paid_bills": paid_bills,
+        "pending_bills": pending_bills,
+
+    }
+
+    return render(
+        request,
+        "reports/billing_report.html",
+        context
+    )
