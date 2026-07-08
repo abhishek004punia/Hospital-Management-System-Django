@@ -50,3 +50,35 @@ def appointment_detail(request, id):
             'appointment': appointment
         }
     )
+
+def edit_appointment(request, id):
+
+    appointment = get_object_or_404(
+        Appointment,
+        id=id
+    )
+
+    if request.method == "POST":
+
+        form = AppointmentForm(
+            request.POST,
+            instance=appointment
+        )
+
+        if form.is_valid():
+            form.save()
+            return redirect('appointment_list')
+
+    else:
+
+        form = AppointmentForm(
+            instance=appointment
+        )
+
+    return render(
+        request,
+        'appointments/edit_appointment.html',
+        {
+            'form': form
+        }
+    )

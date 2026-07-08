@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Appointment
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container-fluid mt-4">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-warning text-dark">
+
+                <h4>✏ Edit Appointment</h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+                    <button
+                        type="submit"
+                        class="btn btn-warning">
+
+                        Update Appointment
+
+                    </button>
+
+                    <a
+                        href="{% url 'appointment_list' %}"
+                        class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
