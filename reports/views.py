@@ -38,3 +38,15 @@ def patient_report(request):
             "patients": patients
         }
     )
+
+def doctor_report(request):
+
+    doctors = Doctor.objects.all()
+
+    return render(
+        request,
+        "reports/doctor_report.html",
+        {
+            "doctors": doctors
+        }
+    )
