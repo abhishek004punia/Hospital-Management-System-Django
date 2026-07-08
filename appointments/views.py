@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
 from .forms import AppointmentForm
 from .models import Appointment
 
@@ -23,16 +24,31 @@ def add_appointment(request):
 
 def appointment_list(request):
 
+    query = request.GET.get("q")
+
     appointments = Appointment.objects.select_related(
-        'patient',
-        'doctor'
-    ).all()
+        "patient",
+        "doctor"
+    )
+
+    if query:
+
+        appointments = appointments.filter(
+
+            Q(patient__full_name__icontains=query) |
+
+            Q(doctor__full_name__icontains=query) |
+
+            Q(status__icontains=query)
+
+        )
 
     return render(
         request,
-        'appointments/appointment_list.html',
+        "appointments/appointment_list.html",
         {
-            'appointments': appointments
+            "appointments": appointments,
+            "query": query,
         }
     )
 

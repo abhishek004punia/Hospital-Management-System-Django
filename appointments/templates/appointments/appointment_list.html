@@ -20,82 +20,113 @@ Appointment List
                 <h4>📅 Appointment List</h4>
             </div>
 
-            <div class="card-body">
+                <div class="card-body">
 
-                <div class="table-responsive">
+                    <form method="GET" class="row mb-3">
 
-                    <table class="table table-bordered table-striped table-hover">
+                        <div class="col-md-10">
 
-                        <thead class="table-dark">
+                            <input
+                                type="text"
+                                name="q"
+                                class="form-control"
+                                placeholder="Search by Patient, Doctor or Status..."
+                                value="{{ query }}">
 
-                            <tr>
+                        </div>
+                        
+                        <div class="col-md-2 d-grid">
 
-                                <th>ID</th>
-                                <th>Patient</th>
-                                <th>Doctor</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Status</th>
-                                <th>Remarks</th>
-                                <th>Action</th>
+                            <button class="btn btn-primary">
 
-                            </tr>
+                                🔍 Search
 
-                        </thead>
+                            </button>
 
-                        <tbody>
+                        </div>
 
-                            {% for appointment in appointments %}
+                    </form>
 
-                            <tr>
+                    <div class="card-body">
 
-                                <td>{{ appointment.id }}</td>
-                                <td>{{ appointment.patient.full_name }}</td>
-                                <td>{{ appointment.doctor.full_name }}</td>
-                                <td>{{ appointment.appointment_date }}</td>
-                                <td>{{ appointment.appointment_time }}</td>
-                                <td>{{ appointment.status }}</td>
-                                <td>{{ appointment.remarks }}</td>
+                        <div class="table-responsive">
 
-                                <td>
+                            <table class="table table-bordered table-striped table-hover">
 
-                                    <div class="d-flex gap-2">
+                                <thead class="table-dark">
 
-                                        <a href="{% url 'appointment_detail' appointment.id %}" class="btn btn-info btn-sm">
-                                            👁 View
-                                        </a>
+                                    <tr>
 
-                                        <a href="{% url 'edit_appointment' appointment.id %}" class="btn btn-warning btn-sm">
-                                            ✏ Edit
-                                        </a>
+                                        <th>ID</th>
+                                        <th>Patient</th>
+                                        <th>Doctor</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Status</th>
+                                        <th>Remarks</th>
+                                        <th>Action</th>
 
-                                        <a href="{% url 'delete_appointment' appointment.id %}" class="btn btn-danger btn-sm">
-                                            ❌ Delete
-                                        </a>
+                                    </tr>
 
-                                    </div>
+                                </thead>
 
-                                </td>
+                                <tbody>
 
-                            </tr>
+                                    {% for appointment in appointments %}
 
-                            {% empty %}
+                                    <tr>
 
-                            <tr>
+                                        <td>{{ appointment.id }}</td>
+                                        <td>{{ appointment.patient.full_name }}</td>
+                                        <td>{{ appointment.doctor.full_name }}</td>
+                                        <td>{{ appointment.appointment_date }}</td>
+                                        <td>{{ appointment.appointment_time }}</td>
+                                        <td>{{ appointment.status }}</td>
+                                        <td>{{ appointment.remarks }}</td>
 
-                                <td colspan="8" class="text-center">
+                                        <td>
 
-                                    No Appointments Found
+                                            <div class="d-flex gap-2">
 
-                                </td>
+                                                <a href="{% url 'appointment_detail' appointment.id %}" class="btn btn-info btn-sm">
+                                                    👁 View
+                                                </a>
 
-                            </tr>
+                                                <a href="{% url 'edit_appointment' appointment.id %}" class="btn btn-warning btn-sm">
+                                                    ✏ Edit
+                                                </a>
 
-                            {% endfor %}
+                                                <a href="{% url 'delete_appointment' appointment.id %}" class="btn btn-danger btn-sm">
+                                                    ❌ Delete
+                                                </a>
 
-                        </tbody>
+                                            </div>
 
-                    </table>
+                                        </td>
+
+                                    </tr>
+
+                                    {% empty %}
+
+                                    <tr>
+
+                                        <td colspan="8" class="text-center">
+
+                                            No Appointment Found Matching Your Search.
+
+                                        </td>
+
+                                    </tr>
+
+                                    {% endfor %}
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -103,8 +134,4 @@ Appointment List
 
         </div>
 
-    </div>
-
-</div>
-
-{% endblock %}
+    {% endblock %}
