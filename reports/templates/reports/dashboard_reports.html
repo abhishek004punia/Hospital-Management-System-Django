@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Reports Dashboard
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container mt-4">
+
+        <h2 class="mb-4">
+            📊 Reports Dashboard
+        </h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-3">
+                <div class="card shadow text-center p-4">
+                    <h1>👥</h1>
+                    <h2>{{ total_patients }}</h2>
+                    <p>Total Patients</p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow text-center p-4">
+                    <h1>👨‍⚕️</h1>
+                    <h2>{{ total_doctors }}</h2>
+                    <p>Total Doctors</p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow text-center p-4">
+                    <h1>📅</h1>
+                    <h2>{{ total_appointments }}</h2>
+                    <p>Total Appointments</p>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow text-center p-4">
+                    <h1>💳</h1>
+                    <h2>{{ total_bills }}</h2>
+                    <p>Total Bills</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
