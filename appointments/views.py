@@ -82,3 +82,24 @@ def edit_appointment(request, id):
             'form': form
         }
     )
+
+def delete_appointment(request, id):
+
+    appointment = get_object_or_404(
+        Appointment,
+        id=id
+    )
+
+    if request.method == "POST":
+
+        appointment.delete()
+
+        return redirect("appointment_list")
+
+    return render(
+        request,
+        "appointments/delete_appointment.html",
+        {
+            "appointment": appointment
+        }
+    )
