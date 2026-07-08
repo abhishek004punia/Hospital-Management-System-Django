@@ -20,4 +20,10 @@ urlpatterns = [
         views.doctor_report,
         name="doctor_report"
     ),
+
+    path(
+        "appointments/",
+        views.appointment_report,
+        name="appointment_report"
+    ),
 ]

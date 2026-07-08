@@ -50,3 +50,15 @@ def doctor_report(request):
             "doctors": doctors
         }
     )
+
+def appointment_report(request):
+
+    appointments = Appointment.objects.all()
+
+    return render(
+        request,
+        "reports/appointment_report.html",
+        {
+            "appointments": appointments
+        }
+    )
