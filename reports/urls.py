@@ -9,4 +9,10 @@ urlpatterns = [
         name="reports_dashboard"
     ),
 
+    path(
+        "patients/",
+        views.patient_report,
+        name="patient_report"
+    ),
+
 ]

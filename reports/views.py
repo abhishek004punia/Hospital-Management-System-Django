@@ -25,3 +25,16 @@ def reports_dashboard(request):
         "reports/dashboard_reports.html",
         context
     )
+
+
+def patient_report(request):
+
+    patients = Patient.objects.all()
+
+    return render(
+        request,
+        "reports/patient_report.html",
+        {
+            "patients": patients
+        }
+    )
