@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Bill Details
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+{% include 'includes/navbar.html' %}
+
+<div class="container mt-4">
+
+<div class="card shadow">
+
+<div class="card-header bg-primary text-white">
+
+<h4>💳 Bill Details</h4>
+
+</div>
+
+<div class="card-body">
+
+<table class="table table-bordered">
+
+<tr>
+<th>Bill ID</th>
+<td>{{ bill.bill_id }}</td>
+</tr>
+
+<tr>
+<th>Patient</th>
+<td>{{ bill.patient }}</td>
+</tr>
+
+<tr>
+<th>Doctor</th>
+<td>{{ bill.doctor }}</td>
+</tr>
+
+<tr>
+<th>Appointment</th>
+<td>{{ bill.appointment }}</td>
+</tr>
+
+<tr>
+<th>Consultation Fee</th>
+<td>₹{{ bill.consultation_fee }}</td>
+</tr>
+
+<tr>
+<th>Medicine Charge</th>
+<td>₹{{ bill.medicine_charge }}</td>
+</tr>
+
+<tr>
+<th>Test Charge</th>
+<td>₹{{ bill.test_charge }}</td>
+</tr>
+
+<tr>
+<th>Other Charge</th>
+<td>₹{{ bill.other_charge }}</td>
+</tr>
+
+<tr>
+<th>Total Amount</th>
+<td><strong>₹{{ bill.total_amount }}</strong></td>
+</tr>
+
+<tr>
+<th>Payment Status</th>
+<td>{{ bill.payment_status }}</td>
+</tr>
+
+<tr>
+<th>Bill Date</th>
+<td>{{ bill.bill_date }}</td>
+</tr>
+
+</table>
+
+<a href="{% url 'bill_list' %}" class="btn btn-secondary">
+
+← Back
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}
