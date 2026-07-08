@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Bill List
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container mt-4">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-primary text-white">
+
+                <h4>💳 Billing List</h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-striped table-hover">
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                <th>Bill ID</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Date</th>
+
+                            </tr>
+
+                        </thead>
+
+                    <tbody>
+
+                        {% for bill in bills %}
+
+                            <tr>
+
+                                <td>{{ bill.bill_id }}</td>
+                                <td>{{ bill.patient }}</td>
+                                <td>{{ bill.doctor }}</td>
+                                <td>₹{{ bill.total_amount }}</td>
+                            <td>{{ bill.payment_status }}</td>
+                            <td>{{ bill.bill_date }}</td>
+
+                        </tr>
+
+                        </tbody>
+
+                    {% empty %}
+
+                        <tr>
+
+                            <td colspan="6" class="text-center">
+
+                                No Bills Found
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
