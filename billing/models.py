@@ -68,5 +68,16 @@ class Billing(models.Model):
 
     bill_date = models.DateField()
 
-    def __str__(self):
-        return self.bill_id
+def save(self, *args, **kwargs):
+
+    self.total_amount = (
+        self.consultation_fee +
+        self.medicine_charge +
+        self.test_charge +
+        self.other_charge
+    )
+
+    super().save(*args, **kwargs)
+
+def __str__(self):
+    return self.bill_id

@@ -28,7 +28,7 @@ class BillingForm(forms.ModelForm):
 
             "other_charge": forms.NumberInput(attrs={"class": "form-control"}),
 
-            "total_amount": forms.NumberInput(attrs={"class": "form-control"}),
+            "total_amount": forms.NumberInput(attrs={"class":"form-control", "readonly":"readonly"}),
 
             "payment_status": forms.Select(attrs={"class": "form-select"}),
 

@@ -30,6 +30,31 @@ Add Bill
 
                     {{ form.as_p }}
 
+                    <script>
+
+                        function calculateTotal(){
+
+                        let consultation =
+                        parseFloat(document.getElementById("id_consultation_fee").value)||0;
+
+                        let medicine =
+                        parseFloat(document.getElementById("id_medicine_charge").value)||0;
+
+                        let test =
+                        parseFloat(document.getElementById("id_test_charge").value)||0;
+                        
+                        let other =
+                        parseFloat(document.getElementById("id_other_charge").value)||0;
+
+                        document.getElementById("id_total_amount").value =
+                        consultation + medicine + test + other;
+
+                        }
+
+                        document.addEventListener("input",calculateTotal);
+
+                    </script>
+
                     <button class="btn btn-success">
 
                         Save Bill
