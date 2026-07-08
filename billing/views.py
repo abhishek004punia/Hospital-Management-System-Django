@@ -1,3 +1,15 @@
 from django.shortcuts import render
+from .forms import BillingForm
 
-# Create your views here.
+
+def add_bill(request):
+
+    form = BillingForm()
+
+    return render(
+        request,
+        "billing/add_bill.html",
+        {
+            "form": form
+        }
+    )
