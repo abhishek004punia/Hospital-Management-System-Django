@@ -5,6 +5,8 @@ from doctors.models import Doctor
 from appointments.models import Appointment
 from billing.models import Billing
 from django.db.models import Q
+from django.db.models import Sum
+from datetime import datetime
 
 
 def reports_dashboard(request):
@@ -94,5 +96,61 @@ def billing_report(request):
     return render(
         request,
         "reports/billing_report.html",
+        context
+    )
+
+
+
+def monthly_report(request):
+
+    month = request.GET.get("month")
+
+    patients = 0
+    appointments = 0
+    bills = 0
+    revenue = 0
+
+    if month:
+
+        year, month_number = month.split("-")
+
+        patients = Patient.objects.filter(
+            created_at__year=year,
+            created_at__month=month_number
+        ).count()
+
+        appointments = Appointment.objects.filter(
+            appointment_date__year=year,
+            appointment_date__month=month_number
+        ).count()
+
+        bill_queryset = Billing.objects.filter(
+            bill_date__year=year,
+            bill_date__month=month_number
+        )
+
+        bills = bill_queryset.count()
+
+        revenue = bill_queryset.aggregate(
+            Sum("total_amount")
+        )["total_amount__sum"] or 0
+
+    context = {
+
+        "selected_month": month,
+
+        "patients": patients,
+
+        "appointments": appointments,
+
+        "bills": bills,
+
+        "revenue": revenue,
+
+    }
+
+    return render(
+        request,
+        "reports/monthly_report.html",
         context
     )
