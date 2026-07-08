@@ -13,36 +13,44 @@ Dashboard
     {% include 'includes/navbar.html' %}
 
     <h2 class="text-center mb-4">
-        Hospital Management System
+        🏥 Hospital Management System Dashboard
     </h2>
 
     <div class="row g-4">
 
+        <!-- Patients -->
         <div class="col-md-3">
             <div class="card shadow p-3 text-center">
-                <h5>Patients</h5>
-                <h2>120</h2>
+                <h1>👥</h1>
+                <h2>{{ total_patients }}</h2>
+                <h5>Total Patients</h5>
             </div>
         </div>
 
+        <!-- Doctors -->
         <div class="col-md-3">
             <div class="card shadow p-3 text-center">
-                <h5>Doctors</h5>
-                <h2>18</h2>
+                <h1>👨‍⚕️</h1>
+                <h2>{{ total_doctors }}</h2>
+                <h5>Total Doctors</h5>
             </div>
         </div>
 
+        <!-- Appointments -->
         <div class="col-md-3">
             <div class="card shadow p-3 text-center">
-                <h5>Appointments</h5>
-                <h2>45</h2>
+                <h1>📅</h1>
+                <h2>{{ total_appointments }}</h2>
+                <h5>Total Appointments</h5>
             </div>
         </div>
 
+        <!-- Pending -->
         <div class="col-md-3">
             <div class="card shadow p-3 text-center">
-                <h5>Billing</h5>
-                <h2>₹2,35,000</h2>
+                <h1>⏳</h1>
+                <h2>{{ pending_appointments }}</h2>
+                <h5>Pending Appointments</h5>
             </div>
         </div>
 
