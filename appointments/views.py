@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import AppointmentForm
 from .models import Appointment
 
@@ -33,5 +33,20 @@ def appointment_list(request):
         'appointments/appointment_list.html',
         {
             'appointments': appointments
+        }
+    )
+
+def appointment_detail(request, id):
+
+    appointment = get_object_or_404(
+        Appointment,
+        id=id
+    )
+
+    return render(
+        request,
+        'appointments/appointment_detail.html',
+        {
+            'appointment': appointment
         }
     )

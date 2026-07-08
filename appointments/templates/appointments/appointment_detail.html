@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Appointment Details
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container-fluid mt-4">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-primary text-white">
+
+                <h4>📅 Appointment Details</h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-bordered">
+
+                    <tr>
+                        <th width="30%">Appointment ID</th>
+                        <td>{{ appointment.id }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Patient</th>
+                        <td>{{ appointment.patient.full_name }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Doctor</th>
+                        <td>{{ appointment.doctor.full_name }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Appointment Date</th>
+                        <td>{{ appointment.appointment_date }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Appointment Time</th>
+                        <td>{{ appointment.appointment_time }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ appointment.status }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Remarks</th>
+                        <td>{{ appointment.remarks }}</td>
+                    </tr>
+
+                </table>
+
+                <a href="{% url 'appointment_list' %}" class="btn btn-secondary">
+                    ← Back
+                </a>
+
+                <a href="#" class="btn btn-warning">
+                    ✏ Edit
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
