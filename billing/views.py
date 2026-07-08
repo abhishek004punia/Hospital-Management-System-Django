@@ -53,3 +53,29 @@ def bill_detail(request, id):
             "bill": bill
         }
     )
+
+def edit_bill(request, id):
+
+    bill = get_object_or_404(Billing, id=id)
+
+    if request.method == "POST":
+
+        form = BillingForm(request.POST, instance=bill)
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect("bill_list")
+
+    else:
+
+        form = BillingForm(instance=bill)
+
+    return render(
+        request,
+        "billing/edit_bill.html",
+        {
+            "form": form
+        }
+    )
