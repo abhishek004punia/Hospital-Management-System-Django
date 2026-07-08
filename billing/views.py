@@ -79,3 +79,21 @@ def edit_bill(request, id):
             "form": form
         }
     )
+
+def delete_bill(request, id):
+
+    bill = get_object_or_404(Billing, id=id)
+
+    if request.method == "POST":
+
+        bill.delete()
+
+        return redirect("bill_list")
+
+    return render(
+        request,
+        "billing/delete_bill.html",
+        {
+            "bill": bill
+        }
+    )

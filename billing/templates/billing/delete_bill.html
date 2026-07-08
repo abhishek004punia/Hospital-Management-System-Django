@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Delete Bill
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container mt-4">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-danger text-white">
+
+                <h4>🗑 Delete Bill</h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <h5>
+
+                    Are you sure you want to delete Bill
+
+                    <strong>{{ bill.bill_id }}</strong>?
+
+                </h5>
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-danger">
+
+                        Yes, Delete
+
+                    </button>
+
+                    <a href="{% url 'bill_list' %}" class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
