@@ -97,3 +97,15 @@ def delete_bill(request, id):
             "bill": bill
         }
     )
+
+def print_bill(request, id):
+
+    bill = get_object_or_404(Billing, id=id)
+
+    return render(
+        request,
+        "billing/print_bill.html",
+        {
+            "bill": bill
+        }
+    )
