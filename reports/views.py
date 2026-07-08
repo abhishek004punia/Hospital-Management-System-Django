@@ -4,6 +4,7 @@ from patients.models import Patient
 from doctors.models import Doctor
 from appointments.models import Appointment
 from billing.models import Billing
+from django.db.models import Q
 
 
 def reports_dashboard(request):
@@ -55,11 +56,19 @@ def appointment_report(request):
 
     appointments = Appointment.objects.all()
 
+    search_date = request.GET.get("date")
+
+    if search_date:
+        appointments = appointments.filter(
+            appointment_date=search_date
+        )
+
     return render(
         request,
         "reports/appointment_report.html",
         {
-            "appointments": appointments
+            "appointments": appointments,
+            "search_date": search_date,
         }
     )
 
