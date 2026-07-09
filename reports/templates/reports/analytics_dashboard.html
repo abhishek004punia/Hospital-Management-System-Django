@@ -54,7 +54,7 @@ Analytics Dashboard
 
             <div class="card-body">
 
-                <canvas id="hospitalChart"></canvas>
+                <canvas id="hospitalChart" height = "100"></canvas>
 
             </div>
 
@@ -72,7 +72,7 @@ Analytics Dashboard
 
                         <div class="card-body">
 
-                            <canvas id="appointmentChart"></canvas>
+                            <canvas id="appointmentChart" height="180"></canvas>
 
                         </div>
 
@@ -90,9 +90,53 @@ Analytics Dashboard
 
                         </div>
 
+                        <div class="row mt-4">
+
+                            <div class="col-md-6">
+
+                                <div class="card shadow">
+
+                                    <div class="card-header bg-primary text-white">
+
+                                        Payment Status
+
+                                    </div>
+
+                                    <div class="card-body">
+
+                                        <canvas id="paymentChart" height="220"></canvas>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="card shadow">
+
+                                    <div class="card-header bg-success text-white">
+
+                                        Top Doctors
+
+                                    </div>
+
+                                    <div class="card-body">
+
+                                        <canvas id="doctorChart" height="220"></canvas>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
                         <div class="card-body">
 
-                            <canvas id="revenueChart"></canvas>
+                            <canvas id="revenueChart" height="180"></canvas>
 
                         </div>
 
@@ -111,6 +155,7 @@ Analytics Dashboard
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+
 
 const ctx = document.getElementById('hospitalChart');
 
@@ -184,6 +229,47 @@ new Chart(document.getElementById("revenueChart"), {
 
 });
 
+new Chart(document.getElementById("paymentChart"), {
+
+    type: "pie",
+
+    data: {
+
+        labels: ["Paid", "Pending", "Cancelled"],
+
+        datasets: [{
+
+            data: [
+                {{ paid_count }},
+                {{ pending_count }},
+                {{ cancelled_count }}
+            ]
+
+        }]
+
+    }
+
+});
+
+new Chart(document.getElementById("doctorChart"), {
+
+    type: "bar",
+
+    data: {
+
+        labels: {{ doctor_labels|safe }},
+
+        datasets: [{
+
+            label: "Appointments",
+
+            data: {{ doctor_data|safe }}
+
+        }]
+
+    }
+
+});
 </script>
 
 {% endblock %}

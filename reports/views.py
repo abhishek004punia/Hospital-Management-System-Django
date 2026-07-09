@@ -428,10 +428,11 @@ def analytics_dashboard(request):
     total_doctors = Doctor.objects.count()
     total_appointments = Appointment.objects.count()
 
-    total_revenue = Billing.objects.aggregate(
+    total_revenue = float(Billing.objects.aggregate(
         Sum("total_amount")
-    )["total_amount__sum"] or 0
+    )["total_amount__sum"] or 0)
 
+    # Monthly Appointments
     monthly_appointments = (
         Appointment.objects
         .annotate(month=ExtractMonth("appointment_date"))
@@ -440,6 +441,7 @@ def analytics_dashboard(request):
         .order_by("month")
     )
 
+    # Monthly Revenue
     monthly_billing = (
         Billing.objects
         .annotate(month=ExtractMonth("bill_date"))
@@ -448,23 +450,63 @@ def analytics_dashboard(request):
         .order_by("month")
     )
 
+    # Payment Status
+    paid_count = Billing.objects.filter(
+        payment_status="Paid"
+    ).count()
+
+    pending_count = Billing.objects.filter(
+        payment_status="Pending"
+    ).count()
+
+    cancelled_count = Billing.objects.filter(
+        payment_status="Cancelled"
+    ).count()
+
+    # Top Doctors
+    top_doctors = (
+        Appointment.objects
+        .values("doctor__full_name")
+        .annotate(total=Count("id"))
+        .order_by("-total")[:5]
+    )
+
     context = {
+
         "total_patients": total_patients,
         "total_doctors": total_doctors,
         "total_appointments": total_appointments,
         "total_revenue": total_revenue,
 
-        "appointment_labels":
-            [item["month"] for item in monthly_appointments],
+        "appointment_labels": [
+            item["month"] for item in monthly_appointments
+        ],
 
-        "appointment_data":
-            [item["total"] for item in monthly_appointments],
+        "appointment_data": [
+            item["total"] for item in monthly_appointments
+        ],
 
-        "billing_labels":
-            [item["month"] for item in monthly_billing],
+        "billing_labels": [
+            item["month"] for item in monthly_billing
+        ],
 
-        "billing_data":
-            [item["total"] for item in monthly_billing],
+        "billing_data": [
+            float(item["total"] or 0) for item in monthly_billing
+        ],
+
+        "paid_count": paid_count,
+        "pending_count": pending_count,
+        "cancelled_count": cancelled_count,
+
+        "doctor_labels": [
+            item["doctor__full_name"]
+            for item in top_doctors
+        ],
+
+        "doctor_data": [
+            item["total"]
+            for item in top_doctors
+        ],
     }
 
     return render(
