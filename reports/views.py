@@ -144,6 +144,64 @@ def doctor_report(request):
         }
     )
 
+def doctor_report_pdf(request):
+
+    response = HttpResponse(content_type="application/pdf")
+
+    response["Content-Disposition"] = (
+        'attachment; filename="doctor_report.pdf"'
+    )
+
+    doc = SimpleDocTemplate(response)
+
+    elements = []
+
+    styles = getSampleStyleSheet()
+
+    elements.append(
+        Paragraph("Hospital Management System", styles["Heading1"])
+    )
+
+    elements.append(
+        Paragraph("Doctor Report", styles["Heading2"])
+    )
+
+    data = [[
+        "Doctor ID",
+        "Name",
+        "Specialization",
+        "Experience"
+    ]]
+
+    doctors = Doctor.objects.all()
+
+    for doctor in doctors:
+
+        data.append([
+            doctor.doctor_id,
+            doctor.full_name,
+            doctor.specialization,
+            str(doctor.experience)
+        ])
+
+    table = Table(data)
+
+    table.setStyle(TableStyle([
+        ("BACKGROUND",(0,0),(-1,0),colors.grey),
+        ("TEXTCOLOR",(0,0),(-1,0),colors.white),
+        ("GRID",(0,0),(-1,-1),1,colors.black),
+        ("BACKGROUND",(0,1),(-1,-1),colors.beige),
+        ("ALIGN",(0,0),(-1,-1),"CENTER"),
+    ]))
+
+    elements.append(table)
+
+    doc.build(elements)
+
+    return response
+
+
+
 def appointment_report(request):
 
     appointments = Appointment.objects.all()
@@ -163,6 +221,64 @@ def appointment_report(request):
             "search_date": search_date,
         }
     )
+
+def appointment_report_pdf(request):
+
+    response = HttpResponse(content_type="application/pdf")
+
+    response["Content-Disposition"] = (
+        'attachment; filename="appointment_report.pdf"'
+    )
+
+    doc = SimpleDocTemplate(response)
+
+    elements = []
+
+    styles = getSampleStyleSheet()
+
+    elements.append(
+        Paragraph("Hospital Management System", styles["Heading1"])
+    )
+
+    elements.append(
+        Paragraph("Appointment Report", styles["Heading2"])
+    )
+
+    data = [[
+        "Appointment ID",
+        "Patient",
+        "Doctor",
+        "Date",
+        "Status"
+    ]]
+
+    appointments = Appointment.objects.all()
+
+    for appointment in appointments:
+
+        data.append([
+            appointment.id,
+            str(appointment.patient),
+            str(appointment.doctor),
+            str(appointment.appointment_date),
+            appointment.status,
+        ])
+
+    table = Table(data)
+
+    table.setStyle(TableStyle([
+        ("BACKGROUND",(0,0),(-1,0),colors.grey),
+        ("TEXTCOLOR",(0,0),(-1,0),colors.white),
+        ("GRID",(0,0),(-1,-1),1,colors.black),
+        ("BACKGROUND",(0,1),(-1,-1),colors.beige),
+        ("ALIGN",(0,0),(-1,-1),"CENTER"),
+    ]))
+
+    elements.append(table)
+
+    doc.build(elements)
+
+    return response
 
 def billing_report(request):
 
@@ -244,3 +360,61 @@ def monthly_report(request):
         "reports/monthly_report.html",
         context
     )
+
+def billing_report_pdf(request):
+
+    response = HttpResponse(content_type="application/pdf")
+
+    response["Content-Disposition"] = (
+        'attachment; filename="billing_report.pdf"'
+    )
+
+    doc = SimpleDocTemplate(response)
+
+    elements = []
+
+    styles = getSampleStyleSheet()
+
+    elements.append(
+        Paragraph("Hospital Management System", styles["Heading1"])
+    )
+
+    elements.append(
+        Paragraph("Billing Report", styles["Heading2"])
+    )
+
+    data = [[
+        "Bill ID",
+        "Patient",
+        "Doctor",
+        "Amount",
+        "Status"
+    ]]
+
+    bills = Billing.objects.all()
+
+    for bill in bills:
+
+        data.append([
+            bill.bill_id,
+            str(bill.patient),
+            str(bill.doctor),
+            f"₹{bill.total_amount}",
+            bill.payment_status,
+        ])
+
+    table = Table(data)
+
+    table.setStyle(TableStyle([
+        ("BACKGROUND",(0,0),(-1,0),colors.grey),
+        ("TEXTCOLOR",(0,0),(-1,0),colors.white),
+        ("GRID",(0,0),(-1,-1),1,colors.black),
+        ("BACKGROUND",(0,1),(-1,-1),colors.beige),
+        ("ALIGN",(0,0),(-1,-1),"CENTER"),
+    ]))
+
+    elements.append(table)
+
+    doc.build(elements)
+
+    return response

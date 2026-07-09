@@ -30,4 +30,7 @@ urlpatterns = [
     path("billing/", views.billing_report, name="billing_report"),
     path("monthly/", views.monthly_report, name="monthly_report"),
     path("patient/pdf/", views.patient_report_pdf, name="patient_report_pdf"),
+    path("doctor/pdf/", views.doctor_report_pdf, name="doctor_report_pdf"),
+    path("appointment/pdf/", views.appointment_report_pdf, name="appointment_report_pdf"),
+    path("billing/pdf/", views.billing_report_pdf, name="billing_report_pdf"),
 ]
