@@ -1,11 +1,24 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+
+from reportlab.platypus import (
+    SimpleDocTemplate,
+    Table,
+    TableStyle,
+    Paragraph,
+)
+
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
 
 from patients.models import Patient
 from doctors.models import Doctor
 from appointments.models import Appointment
 from billing.models import Billing
+
 from django.db.models import Q
 from django.db.models import Sum
+
 from datetime import datetime
 
 
@@ -41,6 +54,83 @@ def patient_report(request):
             "patients": patients
         }
     )
+
+def patient_report_pdf(request):
+
+    response = HttpResponse(content_type="application/pdf")
+
+    response["Content-Disposition"] = (
+        'attachment; filename="patient_report.pdf"'
+    )
+
+    doc = SimpleDocTemplate(response)
+
+    elements = []
+
+    styles = getSampleStyleSheet()
+
+    elements.append(
+        Paragraph("Hospital Management System", styles["Heading1"])
+    )
+
+    elements.append(
+        Paragraph("Patient Report", styles["Heading2"])
+    )
+
+    data = [
+        [
+            "Patient ID",
+            "Name",
+            "Age",
+            "Gender",
+            "Disease",
+        ]
+    ]
+
+    patients = Patient.objects.all()
+
+    for patient in patients:
+
+        data.append([
+
+            patient.patient_id,
+
+            patient.full_name,
+
+            str(patient.age),
+
+            patient.gender,
+
+            patient.disease,
+
+        ])
+
+    table = Table(data)
+
+    table.setStyle(
+
+        TableStyle([
+
+            ("BACKGROUND", (0,0), (-1,0), colors.grey),
+
+            ("TEXTCOLOR", (0,0), (-1,0), colors.white),
+
+            ("GRID", (0,0), (-1,-1), 1, colors.black),
+
+            ("BACKGROUND", (0,1), (-1,-1), colors.beige),
+
+            ("ALIGN", (0,0), (-1,-1), "CENTER"),
+
+        ])
+
+    )
+
+    elements.append(table)
+
+    doc.build(elements)
+
+    return response
+
 
 def doctor_report(request):
 

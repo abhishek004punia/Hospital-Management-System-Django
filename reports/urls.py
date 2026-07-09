@@ -29,4 +29,5 @@ urlpatterns = [
 
     path("billing/", views.billing_report, name="billing_report"),
     path("monthly/", views.monthly_report, name="monthly_report"),
+    path("patient/pdf/", views.patient_report_pdf, name="patient_report_pdf"),
 ]
