@@ -20,6 +20,9 @@ from django.db.models import Q
 from django.db.models import Sum
 
 from datetime import datetime
+from django.db.models import Count, Sum
+from django.db.models.functions import ExtractMonth
+
 
 
 def reports_dashboard(request):
@@ -418,3 +421,54 @@ def billing_report_pdf(request):
     doc.build(elements)
 
     return response
+
+def analytics_dashboard(request):
+
+    total_patients = Patient.objects.count()
+    total_doctors = Doctor.objects.count()
+    total_appointments = Appointment.objects.count()
+
+    total_revenue = Billing.objects.aggregate(
+        Sum("total_amount")
+    )["total_amount__sum"] or 0
+
+    monthly_appointments = (
+        Appointment.objects
+        .annotate(month=ExtractMonth("appointment_date"))
+        .values("month")
+        .annotate(total=Count("id"))
+        .order_by("month")
+    )
+
+    monthly_billing = (
+        Billing.objects
+        .annotate(month=ExtractMonth("bill_date"))
+        .values("month")
+        .annotate(total=Sum("total_amount"))
+        .order_by("month")
+    )
+
+    context = {
+        "total_patients": total_patients,
+        "total_doctors": total_doctors,
+        "total_appointments": total_appointments,
+        "total_revenue": total_revenue,
+
+        "appointment_labels":
+            [item["month"] for item in monthly_appointments],
+
+        "appointment_data":
+            [item["total"] for item in monthly_appointments],
+
+        "billing_labels":
+            [item["month"] for item in monthly_billing],
+
+        "billing_data":
+            [item["total"] for item in monthly_billing],
+    }
+
+    return render(
+        request,
+        "reports/analytics_dashboard.html",
+        context
+    )

@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Analytics Dashboard
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container mt-4">
+
+        <h2 class="mb-4">
+            📊 Analytics Dashboard
+        </h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-3">
+                <div class="card shadow text-center p-3">
+                    <h5>Patients</h5>
+                    <h2>{{ total_patients }}</h2>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow text-center p-3">
+                    <h5>Doctors</h5>
+                    <h2>{{ total_doctors }}</h2>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow text-center p-3">
+                    <h5>Appointments</h5>
+                    <h2>{{ total_appointments }}</h2>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow text-center p-3">
+                    <h5>Revenue</h5>
+                    <h2>₹{{ total_revenue }}</h2>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card shadow mt-5">
+
+            <div class="card-body">
+
+                <canvas id="hospitalChart"></canvas>
+
+            </div>
+
+            <div class="row mt-4">
+
+                <div class="col-md-6">
+
+                    <div class="card shadow">
+
+                        <div class="card-header bg-success text-white">
+
+                            Monthly Appointments
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <canvas id="appointmentChart"></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="card shadow">
+
+                        <div class="card-header bg-warning text-dark">
+
+                            Monthly Revenue
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <canvas id="revenueChart"></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const ctx = document.getElementById('hospitalChart');
+
+new Chart(ctx, {
+
+    type: 'bar',
+
+    data: {
+
+        labels: [
+            'Patients',
+            'Doctors',
+            'Appointments'
+        ],
+
+        datasets: [{
+
+            label: 'Hospital Statistics',
+
+            data: [
+                {{ total_patients }},
+                {{ total_doctors }},
+                {{ total_appointments }}
+            ],
+
+            borderWidth: 1
+
+        }]
+
+    }
+
+});
+
+new Chart(document.getElementById("appointmentChart"), {
+
+    type: "line",
+
+    data: {
+
+        labels: {{ appointment_labels|safe }},
+
+        datasets: [{
+
+            label: "Appointments",
+
+            data: {{ appointment_data|safe }}
+
+        }]
+
+    }
+
+});
+
+new Chart(document.getElementById("revenueChart"), {
+
+    type: "bar",
+
+    data: {
+
+        labels: {{ billing_labels|safe }},
+
+        datasets: [{
+
+            label: "Revenue",
+
+            data: {{ billing_data|safe }}
+
+        }]
+
+    }
+
+});
+
+</script>
+
+{% endblock %}
