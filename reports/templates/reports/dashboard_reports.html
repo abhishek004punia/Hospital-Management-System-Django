@@ -79,11 +79,19 @@ Reports Dashboard
                 📈 Monthly Report
 
             </a>
+            <a href="{% url 'analytics_dashboard' %}"
+                class="btn btn-primary">
+
+                📊 Analytics
+
+            </a>
 
         </div>
 
     </div>
 
 </div>
+
+{% include 'includes/footer.html' %}
 
 {% endblock %}

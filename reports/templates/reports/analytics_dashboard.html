@@ -14,65 +14,103 @@ Analytics Dashboard
 
     <div class="container mt-4">
 
-        <h2 class="mb-4">
-            📊 Analytics Dashboard
-        </h2>
+        <!-- Header -->
+        <div class="card shadow mb-4">
 
-        <div class="row g-4">
+            <div class="card-header bg-primary text-white">
 
-            <div class="col-md-3">
-                <div class="card shadow text-center p-3">
-                    <h5>Patients</h5>
-                    <h2>{{ total_patients }}</h2>
-                </div>
+                <h4 class="mb-0">
+                    📊 Analytics Dashboard
+                </h4>
+
             </div>
-
-            <div class="col-md-3">
-                <div class="card shadow text-center p-3">
-                    <h5>Doctors</h5>
-                    <h2>{{ total_doctors }}</h2>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card shadow text-center p-3">
-                    <h5>Appointments</h5>
-                    <h2>{{ total_appointments }}</h2>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card shadow text-center p-3">
-                    <h5>Revenue</h5>
-                    <h2>₹{{ total_revenue }}</h2>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="card shadow mt-5">
 
             <div class="card-body">
 
-                <canvas id="hospitalChart" height = "100"></canvas>
+                <!-- Summary Cards -->
+                <div class="row g-4">
 
-            </div>
+                    <div class="col-md-3">
+                        <div class="card shadow text-center border-primary">
+                            <div class="card-body">
+                                <h5 class="text-primary">Patients</h5>
+                                <h2>{{ total_patients }}</h2>
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="row mt-4">
+                    <div class="col-md-3">
+                        <div class="card shadow text-center border-success">
+                            <div class="card-body">
+                                <h5 class="text-success">Doctors</h5>
+                                <h2>{{ total_doctors }}</h2>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="col-md-6">
+                    <div class="col-md-3">
+                        <div class="card shadow text-center border-warning">
+                            <div class="card-body">
+                                <h5 class="text-warning">Appointments</h5>
+                                <h2>{{ total_appointments }}</h2>
+                            </div>
+                        </div>
+                    </div>
 
-                    <div class="card shadow">
+                    <div class="col-md-3">
+                        <div class="card shadow text-center border-danger">
+                            <div class="card-body">
+                                <h5 class="text-danger">Revenue</h5>
+                                <h2>₹{{ total_revenue }}</h2>
+                            </div>
+                        </div>
+                    </div>
 
-                        <div class="card-header bg-success text-white">
+                </div>
 
-                            Monthly Appointments
+                <!-- Hospital Statistics -->
+                <div class="card shadow mt-5">
+
+                    <div class="card-header bg-dark text-white">
+                        Hospital Statistics
+                    </div>
+
+                    <div class="card-body">
+                        <canvas id="hospitalChart" height="100"></canvas>
+                    </div>
+
+                </div>
+
+                <!-- Monthly Charts -->
+                <div class="row mt-4">
+
+                    <div class="col-md-6">
+
+                        <div class="card shadow">
+
+                            <div class="card-header bg-success text-white">
+                                Monthly Appointments
+                            </div>
+
+                            <div class="card-body">
+                                <canvas id="appointmentChart" height="180"></canvas>
+                            </div>
 
                         </div>
 
-                        <div class="card-body">
+                    </div>
 
-                            <canvas id="appointmentChart" height="180"></canvas>
+                    <div class="col-md-6">
+
+                        <div class="card shadow">
+
+                            <div class="card-header bg-warning text-dark">
+                                Monthly Revenue
+                            </div>
+
+                            <div class="card-body">
+                                <canvas id="revenueChart" height="180"></canvas>
+                            </div>
 
                         </div>
 
@@ -80,63 +118,36 @@ Analytics Dashboard
 
                 </div>
 
-                <div class="col-md-6">
+                <!-- Bottom Charts -->
+                <div class="row mt-4">
 
-                    <div class="card shadow">
+                    <div class="col-md-6">
 
-                        <div class="card-header bg-warning text-dark">
+                        <div class="card shadow">
 
-                            Monthly Revenue
-
-                        </div>
-
-                        <div class="row mt-4">
-
-                            <div class="col-md-6">
-
-                                <div class="card shadow">
-
-                                    <div class="card-header bg-primary text-white">
-
-                                        Payment Status
-
-                                    </div>
-
-                                    <div class="card-body">
-
-                                        <canvas id="paymentChart" height="220"></canvas>
-
-                                    </div>
-
-                                </div>
-
+                            <div class="card-header bg-primary text-white">
+                                Payment Status
                             </div>
 
-                            <div class="col-md-6">
-
-                                <div class="card shadow">
-
-                                    <div class="card-header bg-success text-white">
-
-                                        Top Doctors
-
-                                    </div>
-
-                                    <div class="card-body">
-
-                                        <canvas id="doctorChart" height="220"></canvas>
-
-                                    </div>
-
-                                </div>
-
+                            <div class="card-body">
+                                <canvas id="paymentChart" height="220"></canvas>
                             </div>
 
                         </div>
 
-                        <div class="card-body">
+                    </div>
 
-                            <canvas id="revenueChart" height="180"></canvas>
+                    <div class="col-md-6">
+
+                        <div class="card shadow">
+
+                            <div class="card-header bg-info text-white">
+                                Top Doctors
+                            </div>
+
+                            <div class="card-body">
+                                <canvas id="doctorChart" height="220"></canvas>
+                            </div>
 
                         </div>
 
@@ -156,24 +167,18 @@ Analytics Dashboard
 
 <script>
 
+// Hospital Statistics
+new Chart(document.getElementById("hospitalChart"), {
 
-const ctx = document.getElementById('hospitalChart');
-
-new Chart(ctx, {
-
-    type: 'bar',
+    type: "bar",
 
     data: {
 
-        labels: [
-            'Patients',
-            'Doctors',
-            'Appointments'
-        ],
+        labels: ["Patients","Doctors","Appointments"],
 
         datasets: [{
 
-            label: 'Hospital Statistics',
+            label: "Hospital Statistics",
 
             data: [
                 {{ total_patients }},
@@ -189,6 +194,7 @@ new Chart(ctx, {
 
 });
 
+// Monthly Appointments
 new Chart(document.getElementById("appointmentChart"), {
 
     type: "line",
@@ -201,7 +207,9 @@ new Chart(document.getElementById("appointmentChart"), {
 
             label: "Appointments",
 
-            data: {{ appointment_data|safe }}
+            data: {{ appointment_data|safe }},
+
+            fill: false
 
         }]
 
@@ -209,6 +217,7 @@ new Chart(document.getElementById("appointmentChart"), {
 
 });
 
+// Monthly Revenue
 new Chart(document.getElementById("revenueChart"), {
 
     type: "bar",
@@ -229,13 +238,14 @@ new Chart(document.getElementById("revenueChart"), {
 
 });
 
+// Payment Status
 new Chart(document.getElementById("paymentChart"), {
 
     type: "pie",
 
     data: {
 
-        labels: ["Paid", "Pending", "Cancelled"],
+        labels: ["Paid","Pending","Cancelled"],
 
         datasets: [{
 
@@ -251,6 +261,7 @@ new Chart(document.getElementById("paymentChart"), {
 
 });
 
+// Top Doctors
 new Chart(document.getElementById("doctorChart"), {
 
     type: "bar",
@@ -270,6 +281,9 @@ new Chart(document.getElementById("doctorChart"), {
     }
 
 });
+
 </script>
+
+{% include 'includes/footer.html' %}
 
 {% endblock %}

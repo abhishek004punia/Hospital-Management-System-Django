@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Prescription Details
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container mt-4">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-primary text-white">
+                <h4>💊 Prescription Details</h4>
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-bordered">
+
+                    <tr>
+                        <th width="30%">Prescription ID</th>
+                        <td>{{ prescription.prescription_id }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Appointment</th>
+                        <td>{{ prescription.appointment }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Patient</th>
+                        <td>{{ prescription.patient }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Doctor</th>
+                        <td>{{ prescription.doctor }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Medicine</th>
+                        <td>{{ prescription.medicine }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Dosage</th>
+                        <td>{{ prescription.dosage }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Duration</th>
+                        <td>{{ prescription.duration }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Instructions</th>
+                        <td>{{ prescription.instructions }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ prescription.status }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Created On</th>
+                        <td>{{ prescription.created_at }}</td>
+                    </tr>
+
+                </table>
+
+                <a href="{% url 'prescription_list' %}" class="btn btn-secondary">
+                    ← Back
+                </a>
+
+                <a href="{% url 'edit_prescription' prescription.id %}" class="btn btn-warning">
+                    ✏ Edit
+                </a>
+
+                <a href="{% url 'delete_prescription' prescription.id %}" class="btn btn-danger">
+                    🗑 Delete
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

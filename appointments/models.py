@@ -1,13 +1,21 @@
 from django.db import models
-from patients.models import Patient
 from doctors.models import Doctor
+from patients.models import Patient
 
 
 class Appointment(models.Model):
 
-    patient = models.ForeignKey(
-        Patient,
-        on_delete=models.CASCADE
+    STATUS_CHOICES = [
+        ("Pending", "Pending"),
+        ("Confirmed", "Confirmed"),
+        ("Completed", "Completed"),
+        ("Cancelled", "Cancelled"),
+    ]
+
+    appointment_id = models.CharField(
+        max_length=10,
+        unique=True,
+        editable=False
     )
 
     doctor = models.ForeignKey(
@@ -15,21 +23,39 @@ class Appointment(models.Model):
         on_delete=models.CASCADE
     )
 
-    appointment_date = models.DateField()
-
-    appointment_time = models.TimeField()
-
-    status = models.CharField(
-        max_length=20,
-        choices=[
-            ('Pending', 'Pending'),
-            ('Completed', 'Completed'),
-            ('Cancelled', 'Cancelled'),
-        ],
-        default='Pending'
+    patient = models.ForeignKey(
+        Patient,
+        on_delete=models.CASCADE
     )
 
-    remarks = models.TextField(blank=True)
+    appointment_date = models.DateField()
+    appointment_time = models.TimeField()
+
+    reason = models.TextField()
+
+    status = models.CharField(
+        max_length=15,
+        choices=STATUS_CHOICES,
+        default="Pending"
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+
+        if not self.appointment_id:
+
+            last = Appointment.objects.order_by("id").last()
+
+            if last and last.appointment_id:
+                number = int(last.appointment_id.split("-")[1]) + 1
+            else:
+                number = 1
+
+            self.appointment_id = f"APT-{number:04d}"
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.patient.full_name} - {self.doctor.full_name}"
+        return f"{self.appointment_id} - {self.patient.patient_id} - {self.patient.full_name}"

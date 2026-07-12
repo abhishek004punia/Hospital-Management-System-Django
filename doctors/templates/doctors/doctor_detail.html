@@ -64,11 +64,6 @@ Doctor Details
                         <td>{{ doctor.address }}</td>
                     </tr>
 
-                    <tr>
-                        <th>Joining Date</th>
-                        <td>{{ doctor.joining_date }}</td>
-                    </tr>
-
                 </table>
 
                 <a href="{% url 'doctor_list' %}" class="btn btn-secondary">
@@ -82,5 +77,7 @@ Doctor Details
     </div>
 
 </div>
+
+{% include 'includes/footer.html' %}
 
 {% endblock %}

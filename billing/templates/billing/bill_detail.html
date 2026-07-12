@@ -10,95 +10,119 @@ Bill Details
 
 <div class="main-content">
 
-{% include 'includes/navbar.html' %}
+    {% include 'includes/navbar.html' %}
 
-<div class="container mt-4">
+    <div class="container mt-4">
 
-<div class="card shadow">
+        <div class="card shadow">
 
-<div class="card-header bg-primary text-white">
+            <div class="card-header bg-primary text-white">
+                <h4>💳 Bill Details - {{ bill.bill_id }}</h4>
+            </div>
 
-<h4>💳 Bill Details</h4>
+            <div class="card-body">
+
+                <table class="table table-bordered table-striped">
+
+                    <tr>
+                        <th width="35%">Bill ID</th>
+                        <td>{{ bill.bill_id }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Patient</th>
+                        <td>{{ bill.patient.patient_id }} - {{ bill.patient.full_name }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Doctor</th>
+                        <td>{{ bill.doctor.doctor_id }} - {{ bill.doctor.full_name }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Appointment</th>
+                        <td>{{ bill.appointment.appointment_id }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Consultation Fee</th>
+                        <td>₹{{ bill.consultation_fee }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Medicine Charge</th>
+                        <td>₹{{ bill.medicine_charge }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Test Charge</th>
+                        <td>₹{{ bill.test_charge }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Other Charge</th>
+                        <td>₹{{ bill.other_charge }}</td>
+                    </tr>
+
+                    <tr class="table-success">
+                        <th>Total Amount</th>
+                        <td>
+                            <strong class="fs-5">
+                                ₹{{ bill.total_amount }}
+                            </strong>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Payment Status</th>
+                        <td>
+                            {% if bill.payment_status == "Paid" %}
+                                <span class="badge bg-success">
+                                    Paid
+                                </span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">
+                                    Pending
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Bill Date</th>
+                        <td>{{ bill.bill_date }}</td>
+                    </tr>
+
+                </table>
+
+                <div class="mt-4">
+
+                    <a href="{% url 'bill_list' %}" class="btn btn-secondary">
+                        ← Back
+                    </a>
+
+                    <a href="{% url 'edit_bill' bill.id %}" class="btn btn-warning">
+                        ✏ Edit
+                    </a>
+
+                    <a href="{% url 'delete_bill' bill.id %}" class="btn btn-danger">
+                        🗑 Delete
+                    </a>
+
+                    <a href="{% url 'print_bill' bill.id %}" class="btn btn-success">
+                        🖨 Print Bill
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
-<div class="card-body">
-
-<table class="table table-bordered">
-
-<tr>
-<th>Bill ID</th>
-<td>{{ bill.bill_id }}</td>
-</tr>
-
-<tr>
-<th>Patient</th>
-<td>{{ bill.patient }}</td>
-</tr>
-
-<tr>
-<th>Doctor</th>
-<td>{{ bill.doctor }}</td>
-</tr>
-
-<tr>
-<th>Appointment</th>
-<td>{{ bill.appointment }}</td>
-</tr>
-
-<tr>
-<th>Consultation Fee</th>
-<td>₹{{ bill.consultation_fee }}</td>
-</tr>
-
-<tr>
-<th>Medicine Charge</th>
-<td>₹{{ bill.medicine_charge }}</td>
-</tr>
-
-<tr>
-<th>Test Charge</th>
-<td>₹{{ bill.test_charge }}</td>
-</tr>
-
-<tr>
-<th>Other Charge</th>
-<td>₹{{ bill.other_charge }}</td>
-</tr>
-
-<tr>
-<th>Total Amount</th>
-<td><strong>₹{{ bill.total_amount }}</strong></td>
-</tr>
-
-<tr>
-<th>Payment Status</th>
-<td>{{ bill.payment_status }}</td>
-</tr>
-
-<tr>
-<th>Bill Date</th>
-<td>{{ bill.bill_date }}</td>
-</tr>
-
-</table>
-
-<a href="{% url 'bill_list' %}" class="btn btn-secondary">
-
-← Back
-
-</a>
-
-<a href="{% url 'print_bill' bill.id %}" class="btn btn-success">
-    🖨 Print Bill
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
+{% include 'includes/footer.html' %}
 
 {% endblock %}

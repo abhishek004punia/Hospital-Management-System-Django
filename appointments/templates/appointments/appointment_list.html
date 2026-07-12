@@ -20,32 +20,47 @@ Appointment List
                 <h4>📅 Appointment List</h4>
             </div>
 
-                <div class="card-body">
+            <form method="GET" class="row mb-3">
 
-                    <form method="GET" class="row mb-3">
+    <div class="col-md-5">
 
-                        <div class="col-md-10">
+        <input
+            type="text"
+            name="q"
+            value="{{ query }}"
+            class="form-control"
+            placeholder="Search Patient, Doctor or Status">
 
-                            <input
-                                type="text"
-                                name="q"
-                                class="form-control"
-                                placeholder="Search by Patient, Doctor or Status..."
-                                value="{{ query }}">
+    </div>
 
-                        </div>
-                        
-                        <div class="col-md-2 d-grid">
+    <div class="col-md-2">
 
-                            <button class="btn btn-primary">
+        <button type="submit" class="btn btn-primary w-100">
+            🔍 Search
+        </button>
 
-                                🔍 Search
+    </div>
 
-                            </button>
+    <div class="col-md-2">
 
-                        </div>
+        <a href="{% url 'appointment_list' %}" class="btn btn-secondary w-100">
+            Reset
+        </a>
 
-                    </form>
+    </div>
+
+    <div class="col-md-3">
+
+        <a href="{% url 'add_appointment' %}" class="btn btn-success w-100">
+            <i class="bi bi-plus-circle"></i>
+            Add Appointment
+        </a>
+
+    </div>
+
+</form>
+
+                    
 
                     <div class="card-body">
 
@@ -57,13 +72,13 @@ Appointment List
 
                                     <tr>
 
-                                        <th>ID</th>
+                                        <th>Appointment ID</th>
                                         <th>Patient</th>
                                         <th>Doctor</th>
                                         <th>Date</th>
                                         <th>Time</th>
                                         <th>Status</th>
-                                        <th>Remarks</th>
+                                        <th>Reason</th>
                                         <th>Action</th>
 
                                     </tr>
@@ -76,13 +91,13 @@ Appointment List
 
                                     <tr>
 
-                                        <td>{{ appointment.id }}</td>
-                                        <td>{{ appointment.patient.full_name }}</td>
-                                        <td>{{ appointment.doctor.full_name }}</td>
+                                        <td>{{ appointment.appointment_id }}</td>
+                                        <td>{{ appointment.patient.patient_id }} - {{ appointment.patient.full_name }}</td>
+                                        <td>{{ appointment.doctor.doctor_id }} - {{ appointment.doctor.full_name }}</td>
                                         <td>{{ appointment.appointment_date }}</td>
                                         <td>{{ appointment.appointment_time }}</td>
                                         <td>{{ appointment.status }}</td>
-                                        <td>{{ appointment.remarks }}</td>
+                                        <td>{{ appointment.reason }}</td>
 
                                         <td>
 
@@ -128,10 +143,12 @@ Appointment List
 
                     </div>
 
-                </div>
+                
 
             </div>
 
         </div>
 
+        {% include 'includes/footer.html' %}
+        
     {% endblock %}

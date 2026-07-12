@@ -5,38 +5,53 @@ from .models import Billing
 class BillingForm(forms.ModelForm):
 
     class Meta:
-
         model = Billing
 
-        fields = "__all__"
+        exclude = [
+            'bill_id',
+            'doctor',
+            'patient',
+            'consultation_fee',
+            'total_amount',
+            'created_at',
+            'updated_at',
+        ]
 
         widgets = {
 
-            "bill_id": forms.TextInput(attrs={"class": "form-control"}),
+            'appointment': forms.Select(
+                attrs={'class': 'form-control'}
+            ),
 
-            "patient": forms.Select(attrs={"class": "form-select"}),
-
-            "doctor": forms.Select(attrs={"class": "form-select"}),
-
-            "appointment": forms.Select(attrs={"class": "form-select"}),
-
-            "consultation_fee": forms.NumberInput(attrs={"class": "form-control"}),
-
-            "medicine_charge": forms.NumberInput(attrs={"class": "form-control"}),
-
-            "test_charge": forms.NumberInput(attrs={"class": "form-control"}),
-
-            "other_charge": forms.NumberInput(attrs={"class": "form-control"}),
-
-            "total_amount": forms.NumberInput(attrs={"class":"form-control", "readonly":"readonly"}),
-
-            "payment_status": forms.Select(attrs={"class": "form-select"}),
-
-            "bill_date": forms.DateInput(
+            'medicine_charge': forms.NumberInput(
                 attrs={
-                    "class": "form-control",
-                    "type": "date"
+                    'class': 'form-control',
+                    'step': '0.01'
                 }
             ),
 
+            'test_charge': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
+                    'step': '0.01'
+                }
+            ),
+
+            'other_charge': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
+                    'step': '0.01'
+                }
+            ),
+
+            'payment_status': forms.Select(
+                attrs={'class': 'form-control'}
+            ),
+
+            'bill_date': forms.DateInput(
+                attrs={
+                    'class': 'form-control',
+                    'type': 'date'
+                }
+            ),
         }

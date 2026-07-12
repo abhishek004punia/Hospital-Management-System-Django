@@ -21,8 +21,48 @@ Doctor List
             </div>
 
             <div class="card-body">
-                <div class="table-responsive">
 
+               <form method="GET" class="row mb-3">
+
+    <div class="col-md-5">
+
+        <input
+            type="text"
+            name="q"
+            value="{{ query }}"
+            class="form-control"
+            placeholder="Search Doctor Name">
+
+    </div>
+
+    <div class="col-md-2">
+
+        <button type="submit" class="btn btn-primary w-100">
+            🔍 Search
+        </button>
+
+    </div>
+
+    <div class="col-md-2">
+
+        <a href="{% url 'doctor_list' %}" class="btn btn-secondary w-100">
+            Reset
+        </a>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <a href="{% url 'add_doctor' %}" class="btn btn-success w-100">
+            <i class="bi bi-plus-circle"></i>
+            Add Doctor
+        </a>
+
+    </div>
+
+</form> 
+
+                     <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover">
 
                         <thead class="table-dark">
@@ -31,12 +71,15 @@ Doctor List
 
                                 <th>Doctor ID</th>
                                 <th>Full Name</th>
+                                <th>Department</th>
                                 <th>Specialization</th>
                                 <th>Qualification</th>
+                                <th>Gender</th>
                                 <th>Experience</th>
                                 <th>Mobile</th>
                                 <th>Email</th>
-                                <th>Joining Date</th>
+                                <th>Fee</th>
+                                <th>Status</th>
                                 <th>Action</th>
 
                             </tr>
@@ -51,12 +94,15 @@ Doctor List
 
                                 <td>{{ doctor.doctor_id }}</td>
                                 <td>{{ doctor.full_name }}</td>
+                                <td>{{ doctor.department}}</td>
                                 <td>{{ doctor.specialization }}</td>
                                 <td>{{ doctor.qualification }}</td>
+                                <td>{{ doctor.gender }}</td>
                                 <td>{{ doctor.experience }} Years</td>
                                 <td>{{ doctor.mobile }}</td>
                                 <td>{{ doctor.email }}</td>
-                                <td>{{ doctor.joining_date }}</td>
+                                <td>{{ doctor.consultation_fee }}</td>
+                                <td>{{ doctor.status }}</td>
 
                                 <td>
 
@@ -107,5 +153,7 @@ Doctor List
     </div>
 
 </div>
+
+{% include 'includes/footer.html' %}
 
 {% endblock %}

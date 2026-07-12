@@ -6,7 +6,12 @@ class AppointmentForm(forms.ModelForm):
 
     class Meta:
         model = Appointment
-        fields = '__all__'
+        
+        exclude = [
+            'appointment_id',
+            'created_at',
+            'updated_at',
+        ]
 
         widgets = {
 
@@ -36,10 +41,11 @@ class AppointmentForm(forms.ModelForm):
                 attrs={'class': 'form-control'}
             ),
 
-            'remarks': forms.Textarea(
+            'reason': forms.Textarea(
                 attrs={
                     'class': 'form-control',
-                    'rows': 3
+                    'rows': 3,
+                    'placeholder' : 'Enter appointment reason'
                 }
             ),
         }

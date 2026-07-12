@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Delete Prescription
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container mt-4">
+
+        <div class="card shadow border-danger">
+
+            <div class="card-header bg-danger text-white">
+                <h4>🗑 Delete Prescription</h4>
+            </div>
+
+            <div class="card-body">
+
+                <h5 class="text-danger">
+                    Are you sure you want to delete this prescription?
+                </h5>
+
+                <hr>
+
+                <p><strong>Prescription ID:</strong> {{ prescription.prescription_id }}</p>
+
+                <p><strong>Patient:</strong> {{ prescription.patient }}</p>
+
+                <p><strong>Doctor:</strong> {{ prescription.doctor }}</p>
+
+                <p><strong>Medicine:</strong> {{ prescription.medicine }}</p>
+
+                <p><strong>Status:</strong> {{ prescription.status }}</p>
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-danger">
+                        🗑 Yes, Delete
+                    </button>
+
+                    <a href="{% url 'prescription_list' %}" class="btn btn-secondary">
+                        Cancel
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

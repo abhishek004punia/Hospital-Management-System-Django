@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Prescription
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container mt-4">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-warning text-dark">
+                <h4>✏ Edit Prescription</h4>
+            </div>
+
+            <div class="card-body">
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label>Appointment</label>
+                            {{ form.appointment }}
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Patient</label>
+                            {{ form.patient }}
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Doctor</label>
+                            {{ form.doctor }}
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Medicine</label>
+                            {{ form.medicine }}
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Dosage</label>
+                            {{ form.dosage }}
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Duration</label>
+                            {{ form.duration }}
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label>Instructions</label>
+                            {{ form.instructions }}
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label>Status</label>
+                            {{ form.status }}
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-warning">
+                        💾 Update Prescription
+                    </button>
+
+                    <a href="{% url 'prescription_list' %}" class="btn btn-secondary">
+                        Cancel
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

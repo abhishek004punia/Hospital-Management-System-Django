@@ -28,17 +28,17 @@ Appointment Details
 
                     <tr>
                         <th width="30%">Appointment ID</th>
-                        <td>{{ appointment.id }}</td>
+                        <td>{{ appointment.appointment_id }}</td>
                     </tr>
 
                     <tr>
                         <th>Patient</th>
-                        <td>{{ appointment.patient.full_name }}</td>
+                        <td>{{appointment.patient.patient_id }} - {{ appointment.patient.full_name }}</td>
                     </tr>
 
                     <tr>
                         <th>Doctor</th>
-                        <td>{{ appointment.doctor.full_name }}</td>
+                        <td>{{ appointment.doctor.doctor_id }} - {{ appointment.doctor.full_name }}</td>
                     </tr>
 
                     <tr>
@@ -58,7 +58,7 @@ Appointment Details
 
                     <tr>
                         <th>Remarks</th>
-                        <td>{{ appointment.remarks }}</td>
+                        <td>{{ appointment.reason }}</td>
                     </tr>
 
                 </table>
@@ -78,5 +78,7 @@ Appointment Details
     </div>
 
 </div>
+
+{% include 'includes/footer.html' %}
 
 {% endblock %}

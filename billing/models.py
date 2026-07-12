@@ -14,7 +14,8 @@ class Billing(models.Model):
 
     bill_id = models.CharField(
         max_length=20,
-        unique=True
+        unique=True,
+        editable=False
     )
 
     patient = models.ForeignKey(
@@ -34,7 +35,8 @@ class Billing(models.Model):
 
     consultation_fee = models.DecimalField(
         max_digits=10,
-        decimal_places=2
+        decimal_places=2,
+        default=0
     )
 
     medicine_charge = models.DecimalField(
@@ -57,7 +59,9 @@ class Billing(models.Model):
 
     total_amount = models.DecimalField(
         max_digits=10,
-        decimal_places=2
+        decimal_places=2,
+        editable=False,
+        default=0
     )
 
     payment_status = models.CharField(
@@ -68,16 +72,38 @@ class Billing(models.Model):
 
     bill_date = models.DateField()
 
-def save(self, *args, **kwargs):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-    self.total_amount = (
-        self.consultation_fee +
-        self.medicine_charge +
-        self.test_charge +
-        self.other_charge
-    )
+    def save(self, *args, **kwargs):
 
-    super().save(*args, **kwargs)
+        # Auto Bill ID
+        if not self.bill_id:
+            last = Billing.objects.order_by("id").last()
+
+            if last and last.bill_id:
+                number = int(last.bill_id.split("-")[1]) + 1
+            else:
+                number = 1
+
+            self.bill_id = f"BILL-{number:04d}"
+
+        # Auto Doctor & Patient from Appointment
+        self.doctor = self.appointment.doctor
+        self.patient = self.appointment.patient
+
+        # Auto Consultation Fee from Doctor
+        self.consultation_fee = self.doctor.consultation_fee
+
+        # Auto Total Amount
+        self.total_amount = (
+            self.consultation_fee +
+            self.medicine_charge +
+            self.test_charge +
+            self.other_charge
+        )
+
+        super().save(*args, **kwargs)
 
 def __str__(self):
     return self.bill_id

@@ -1,58 +1,57 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import BillingForm
 from .models import Billing
+from .forms import BillingForm
+from django.db.models import Q
 
 
 def add_bill(request):
 
     if request.method == "POST":
-
         form = BillingForm(request.POST)
 
         if form.is_valid():
-
             form.save()
-
-            return redirect("bill_list")
+            return redirect('bill_list')
 
     else:
-
         form = BillingForm()
 
-    return render(
-        request,
-        "billing/add_bill.html",
-        {
-            "form": form
-        }
-    )
+    return render(request, 'billing/add_bill.html', {
+        'form': form
+    })
 
 
 def bill_list(request):
 
+    query = request.GET.get("q")
+
     bills = Billing.objects.all()
+
+    if query:
+        bills = bills.filter(
+            Q(bill_id__icontains=query) |
+            Q(patient__full_name__icontains=query) |
+            Q(doctor__full_name__icontains=query)
+        )
 
     return render(
         request,
         "billing/bill_list.html",
         {
-            "bills": bills
+            "bills": bills,
+            "query": query,
         }
     )
+
+
 def bill_detail(request, id):
 
-    bill = get_object_or_404(
-        Billing,
-        id=id
-    )
+    bill = get_object_or_404(Billing, id=id)
 
-    return render(
-        request,
-        "billing/bill_detail.html",
-        {
-            "bill": bill
-        }
-    )
+    return render(request, 'billing/bill_detail.html', {
+        'bill': bill
+    })
+
 
 def edit_bill(request, id):
 
@@ -63,49 +62,33 @@ def edit_bill(request, id):
         form = BillingForm(request.POST, instance=bill)
 
         if form.is_valid():
-
             form.save()
-
-            return redirect("bill_list")
+            return redirect('bill_list')
 
     else:
-
         form = BillingForm(instance=bill)
 
-    return render(
-        request,
-        "billing/edit_bill.html",
-        {
-            "form": form
-        }
-    )
+    return render(request, 'billing/edit_bill.html', {
+        'form': form,
+        'bill': bill
+    })
+
 
 def delete_bill(request, id):
 
     bill = get_object_or_404(Billing, id=id)
 
     if request.method == "POST":
-
         bill.delete()
+        return redirect('bill_list')
 
-        return redirect("bill_list")
+    return render(request, 'billing/delete_bill.html', {
+        'bill': bill
+    })
 
-    return render(
-        request,
-        "billing/delete_bill.html",
-        {
-            "bill": bill
-        }
-    )
 
 def print_bill(request, id):
-
     bill = get_object_or_404(Billing, id=id)
-
-    return render(
-        request,
-        "billing/print_bill.html",
-        {
-            "bill": bill
-        }
-    )
+    return render(request, "billing/print_bill.html", {
+        "bill": bill
+    })

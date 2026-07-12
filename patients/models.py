@@ -19,7 +19,7 @@ class Patient(models.Model):
         ('O-', 'O-'),
     ]
 
-    patient_id = models.CharField(max_length=20, unique=True)
+    patient_id = models.CharField(max_length=20, unique=True, editable=False)
     full_name = models.CharField(max_length=100)
     age = models.PositiveIntegerField()
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
@@ -36,6 +36,21 @@ class Patient(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    def save(self, *args, **kwargs):
+        if not self.patient_id:
+            last = Patient.objects.order_by("id").last()
+
+            if last and last.patient_id:
+                number = int(last.patient_id.split("-")[1]) + 1
+            else:
+                number = 1
+
+            self.patient_id = f"PAT-{number:04d}"
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.patient_id} - {self.full_name}"
+    
+    

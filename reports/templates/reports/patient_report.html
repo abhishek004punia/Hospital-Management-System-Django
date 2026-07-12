@@ -47,8 +47,10 @@ Patient Report
                                 <th>Name</th>
                                 <th>Age</th>
                                 <th>Gender</th>
-                                <th>Phone</th>
+                                <th>mobile</th>
+                                <th>Email</th>
                                 <th>Disease</th>
+                                <th>Admission Date</th>
 
                             </tr>
 
@@ -65,7 +67,9 @@ Patient Report
                                 <td>{{ patient.age }}</td>
                                 <td>{{ patient.gender }}</td>
                                 <td>{{ patient.mobile }}</td>
+                                <td>{{ patient.email }}</td>
                                 <td>{{ patient.disease }}</td>
+                                <td>{{ patient.admission_date }}</td>
 
                             </tr>
 
@@ -96,5 +100,7 @@ Patient Report
     </div>
 
 </div>
+
+{% include 'includes/footer.html' %}
 
 {% endblock %}

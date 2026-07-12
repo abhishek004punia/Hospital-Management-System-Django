@@ -86,7 +86,10 @@ def patient_report_pdf(request):
             "Name",
             "Age",
             "Gender",
+            "Mobile",
+            "Email",
             "Disease",
+            "Admission Date"
         ]
     ]
 
@@ -104,7 +107,13 @@ def patient_report_pdf(request):
 
             patient.gender,
 
+            patient.mobile,
+            
+            patient.email,
+
             patient.disease,
+
+            patient.admission_date.strftime("%d-%m-%Y"),
 
         ])
 
@@ -172,19 +181,33 @@ def doctor_report_pdf(request):
     data = [[
         "Doctor ID",
         "Name",
+        "Department",
         "Specialization",
-        "Experience"
+        "Qualification",
+        "Experience",
+        "Mobile",
+        "Email",
+        "Fee",
+        "Stats",
     ]]
 
     doctors = Doctor.objects.all()
+
+    print(Doctor.objects.values().first())
 
     for doctor in doctors:
 
         data.append([
             doctor.doctor_id,
             doctor.full_name,
+            doctor.department,
             doctor.specialization,
-            str(doctor.experience)
+            doctor.qualification,
+            str(doctor.experience),
+            doctor.mobile,
+            doctor.email,
+            f"₹{doctor.consultation_fee}",
+            doctor.status,
         ])
 
     table = Table(data)
@@ -195,6 +218,8 @@ def doctor_report_pdf(request):
         ("GRID",(0,0),(-1,-1),1,colors.black),
         ("BACKGROUND",(0,1),(-1,-1),colors.beige),
         ("ALIGN",(0,0),(-1,-1),"CENTER"),
+        ("FONTSIZE", (0,0), (-1,-1), 8),
+        ("BOTTOMPADDING",(0,0),(-1,0),8),
     ]))
 
     elements.append(table)
@@ -252,6 +277,7 @@ def appointment_report_pdf(request):
         "Patient",
         "Doctor",
         "Date",
+        "Time",
         "Status"
     ]]
 
@@ -260,10 +286,11 @@ def appointment_report_pdf(request):
     for appointment in appointments:
 
         data.append([
-            appointment.id,
+            appointment.appointment_id,
             str(appointment.patient),
             str(appointment.doctor),
-            str(appointment.appointment_date),
+            appointment.appointment_date.strftime("%d-%m-%y"),
+            appointment.appointment_time.strftime("%I:%M %p"),
             appointment.status,
         ])
 
@@ -390,8 +417,9 @@ def billing_report_pdf(request):
         "Bill ID",
         "Patient",
         "Doctor",
-        "Amount",
-        "Status"
+        "Total Amount",
+        "Payment Status",
+        "Bill Date"
     ]]
 
     bills = Billing.objects.all()
@@ -402,8 +430,9 @@ def billing_report_pdf(request):
             bill.bill_id,
             str(bill.patient),
             str(bill.doctor),
-            f"₹{bill.total_amount}",
+            str(bill.total_amount),
             bill.payment_status,
+            bill.bill_date.strftime("%d-%m-%y"),
         ])
 
     table = Table(data)

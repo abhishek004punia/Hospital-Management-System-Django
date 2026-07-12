@@ -10,92 +10,115 @@ Monthly Report
 
 <div class="main-content">
 
-{% include 'includes/navbar.html' %}
+    {% include 'includes/navbar.html' %}
 
-<div class="container mt-4">
+    <div class="container mt-4">
 
-<h2 class="mb-4">
-📈 Monthly Report
-</h2>
+        <div class="card shadow mb-4">
 
-<form method="GET" class="row mb-4">
+            <div class="card-header bg-primary text-white">
 
-<div class="col-md-4">
+                <h4 class="mb-0">
+                    📈 Monthly Report
+                </h4>
 
-<input
-type="month"
-name="month"
-value="{{ selected_month }}"
-class="form-control">
+            </div>
+
+            <div class="card-body">
+
+                <form method="GET" class="row mb-4">
+
+                    <div class="col-md-4">
+
+                        <input
+                            type="month"
+                            name="month"
+                            value="{{ selected_month }}"
+                            class="form-control">
+
+                    </div>
+
+                    <div class="col-md-2">
+
+                        <button class="btn btn-primary w-100">
+                            Search
+                        </button>
+
+                    </div>
+
+                    <div class="col-md-2">
+
+                        <a href="{% url 'monthly_report' %}"
+                           class="btn btn-secondary w-100">
+
+                            Reset
+
+                        </a>
+
+                    </div>
+
+                </form>
+
+                <div class="row g-4">
+
+                    <div class="col-md-3">
+
+                        <div class="card shadow text-center p-3 border-primary">
+
+                            <h5 class="text-primary">Patients</h5>
+
+                            <h2>{{ patients }}</h2>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="card shadow text-center p-3 border-info">
+
+                            <h5 class="text-info">Appointments</h5>
+
+                            <h2>{{ appointments }}</h2>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="card shadow text-center p-3 border-warning">
+
+                            <h5 class="text-warning">Bills</h5>
+
+                            <h2>{{ bills }}</h2>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <div class="card shadow text-center p-3 border-success">
+
+                            <h5 class="text-success">Revenue</h5>
+
+                            <h2>₹{{ revenue }}</h2>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
-<div class="col-md-2">
-
-<button class="btn btn-primary w-100">
-
-Search
-
-</button>
-
-</div>
-
-</form>
-
-<div class="row g-4">
-
-<div class="col-md-3">
-
-<div class="card shadow text-center p-3">
-
-<h5>Patients</h5>
-
-<h2>{{ patients }}</h2>
-
-</div>
-
-</div>
-
-<div class="col-md-3">
-
-<div class="card shadow text-center p-3">
-
-<h5>Appointments</h5>
-
-<h2>{{ appointments }}</h2>
-
-</div>
-
-</div>
-
-<div class="col-md-3">
-
-<div class="card shadow text-center p-3">
-
-<h5>Bills</h5>
-
-<h2>{{ bills }}</h2>
-
-</div>
-
-</div>
-
-<div class="col-md-3">
-
-<div class="card shadow text-center p-3">
-
-<h5>Revenue</h5>
-
-<h2>₹{{ revenue }}</h2>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
+{% include 'includes/footer.html' %}
 
 {% endblock %}

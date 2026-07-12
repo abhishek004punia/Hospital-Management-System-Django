@@ -30,13 +30,6 @@ Doctor Report
 
                     </a>
 
-                    <a href="{% url 'analytics_dashboard' %}"
-                        class="btn btn-primary">
-
-                        📊 Analytics
-
-                    </a>
-
                 </div>
 
                 <div class="table-responsive">
@@ -48,10 +41,14 @@ Doctor Report
                             <tr>
                                 <th>Doctor ID</th>
                                 <th>Name</th>
+                                <th>Department</th>
                                 <th>Specialization</th>
                                 <th>Qualification</th>
                                 <th>Experience</th>
                                 <th>Mobile</th>
+                                <th>Email</th>
+                                <th>Consultation Fee</th>
+                                <th>Status</th>
                             </tr>
 
                         </thead>
@@ -64,10 +61,14 @@ Doctor Report
 
                                 <td>{{ doctor.doctor_id }}</td>
                                 <td>{{ doctor.full_name }}</td>
+                                <td>{{ doctor.department }}</td>
                                 <td>{{ doctor.specialization }}</td>
                                 <td>{{ doctor.qualification }}</td>
                                 <td>{{ doctor.experience }}</td>
                                 <td>{{ doctor.mobile }}</td>
+                                <td>{{ doctor.email }}</td>
+                                <td>₹{{ doctor.consultation_fee }}</td>
+                                <td>{{ doctor.status }}</td>
 
                             </tr>
 
@@ -75,7 +76,7 @@ Doctor Report
 
                             <tr>
 
-                                <td colspan="6" class="text-center">
+                                <td colspan="10" class="text-center">
 
                                     No Doctors Found
 
@@ -98,5 +99,7 @@ Doctor Report
     </div>
 
 </div>
+
+{% include 'includes/footer.html' %}
 
 {% endblock %}

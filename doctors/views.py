@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Doctor
 from .forms import DoctorForm
+from django.db.models import Q
 
 
 def add_doctor(request):
@@ -11,7 +12,7 @@ def add_doctor(request):
 
         if form.is_valid():
             form.save()
-            return redirect('add_doctor')
+            return redirect('doctor_list')
 
     else:
 
@@ -23,11 +24,27 @@ def add_doctor(request):
 
 def doctor_list(request):
 
+    query = request.GET.get("q")
+
     doctors = Doctor.objects.all()
 
-    return render(request, 'doctors/doctor_list.html', {
-        'doctors': doctors
-    })
+    if query:
+
+        doctors = doctors.filter(
+            Q(full_name__icontains=query) |
+            Q(specialization__icontains=query) |
+            Q(department__icontains=query) |
+            Q(mobile__icontains=query)
+        )
+
+    return render(
+        request,
+        "doctors/doctor_list.html",
+        {
+            "doctors": doctors,
+            "query": query,
+        }
+    )
 
 def doctor_detail(request, id):
 
