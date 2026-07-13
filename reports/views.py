@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from departments.models import Department
 
 from reportlab.platypus import (
     SimpleDocTemplate,
@@ -36,6 +37,7 @@ def reports_dashboard(request):
         "total_appointments": Appointment.objects.count(),
 
         "total_bills": Billing.objects.count(),
+        "total_departments": Department.objects.count(),
 
     }
 
@@ -55,6 +57,18 @@ def patient_report(request):
         "reports/patient_report.html",
         {
             "patients": patients
+        }
+    )
+
+def department_report(request):
+
+    departments = Department.objects.all()
+
+    return render(
+        request,
+        "reports/department_report.html",
+        {
+            "departments": departments
         }
     )
 

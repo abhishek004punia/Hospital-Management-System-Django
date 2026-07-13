@@ -52,6 +52,18 @@ Reports Dashboard
                 </div>
             </div>
 
+            <div class="col-md-3">
+                <div class="card shadow text-center p-4">
+
+                    <h1>🏢</h1>
+
+                    <h2>{{ total_departments }}</h2>
+
+                    <p>Total Departments</p>
+
+                </div>
+            </div>
+
         </div>
 
         <!-- Reports Buttons -->
@@ -73,6 +85,13 @@ Reports Dashboard
                 💳 Billing Report
             </a>
 
+            <a href="{% url 'department_report' %}"
+                class="btn btn-secondary ms-2">
+
+                🏢 Department Report
+
+            </a>
+
             <a href="{% url 'monthly_report' %}"
                 class="btn btn-warning">
 
@@ -84,6 +103,10 @@ Reports Dashboard
 
                 📊 Analytics
 
+            </a>
+
+            <a href="{% url 'department_report' %}" class="btn btn-secondary ms-2">
+                🏢 Department Report
             </a>
 
         </div>

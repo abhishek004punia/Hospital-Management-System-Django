@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Delete Department
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container mt-4">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-danger text-white">
+                <h4>🗑 Delete Department</h4>
+            </div>
+
+            <div class="card-body text-center">
+
+                <h5>
+
+                    Are you sure you want to delete
+
+                    <strong>{{ department.department_name }}</strong> ?
+
+                </h5>
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <button class="btn btn-danger">
+
+                        Yes, Delete
+
+                    </button>
+
+                    <a href="{% url 'department_list' %}"
+                       class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

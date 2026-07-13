@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Department Details
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container mt-4">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-info text-white">
+                <h4>🏢 Department Details</h4>
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-bordered">
+
+                    <tr>
+                        <th>Department ID</th>
+                        <td>{{ department.department_id }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Department Name</th>
+                        <td>{{ department.department_name }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Department Head</th>
+                        <td>{{ department.department_head }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Location</th>
+                        <td>{{ department.location }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Description</th>
+                        <td>{{ department.description }}</td>
+                    </tr>
+
+                </table>
+
+                <a href="{% url 'department_list' %}" class="btn btn-secondary">
+                    ⬅ Back
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

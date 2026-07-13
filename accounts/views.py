@@ -7,7 +7,7 @@ from patients.models import Patient
 from doctors.models import Doctor
 from appointments.models import Appointment
 from billing.models import Billing
-
+from departments.models import Department
 from users.forms import LoginForm
 from django.http import HttpResponseForbidden
 
@@ -67,6 +67,7 @@ def dashboard(request):
     total_patients = Patient.objects.count()
     total_doctors = Doctor.objects.count()
     total_appointments = Appointment.objects.count()
+    total_departments = Department.objects.count()
 
     pending_appointments = Appointment.objects.filter(
         status="Pending"
@@ -121,6 +122,7 @@ def dashboard(request):
         "total_patients": total_patients,
         "total_doctors": total_doctors,
         "total_appointments": total_appointments,
+        "total_departments": total_departments,
         "pending_appointments": pending_appointments,
         "recent_patients": recent_patients,
         "today_appointments": today_appointments,

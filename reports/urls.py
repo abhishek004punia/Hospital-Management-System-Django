@@ -33,5 +33,7 @@ urlpatterns = [
     path("doctor/pdf/", views.doctor_report_pdf, name="doctor_report_pdf"),
     path("appointment/pdf/", views.appointment_report_pdf, name="appointment_report_pdf"),
     path("billing/pdf/", views.billing_report_pdf, name="billing_report_pdf"),
+    path("departments/", views.department_report, name="department_report"),
+    #path("department/pdf/", views.department_report_pdf, name="department_report_pdf"),
     path("analytics/", views.analytics_dashboard, name="analytics_dashboard"),
 ]

@@ -40,54 +40,78 @@ Dashboard
     <div class="row g-4">
 
         <!-- Patients -->
-        <div class="col-md-3">
+        <div class="col-lg-4 col-md-6">
             <div class="card shadow border-0 h-100">
                 <div class="card-body text-center">
-                <h1>👥</h1>
-                <h6 class="text-muted">Patients</h6>
-                <h2 class="fw-bold text-primary">{{ total_patients }}</h2>
+                    <h1>👥</h1>
+                    <h6 class="text-muted">Patients</h6>
+                    <h2 class="fw-bold text-primary">{{ total_patients }}</h2>
+                </div>
             </div>
         </div>
-    </div>
 
         <!-- Doctors -->
-        <div class="col-md-3">
+        <div class="col-lg-4 col-md-6">
             <div class="card shadow border-0 h-100">
                 <div class="card-body text-center">
-                <h1>👨‍⚕️</h1>
-                <h6 class="text-muted">Doctors</h6>
-                <h2 class="fw-bold text-success">{{ total_doctors }}</h2>
+                    <h1>👨‍⚕️</h1>
+                    <h6 class="text-muted">Doctors</h6>
+                    <h2 class="fw-bold text-success">{{ total_doctors }}</h2>
                 
+                </div>
             </div>
         </div>
-</div>
 
         <!-- Appointments -->
-        <div class="col-md-3">
+        <div class="col-lg-4 col-md-6">
             <div class="card shadow border-0 h-100">
                 <div class="card-body text-center">
-                <h1>📅</h1>
-                <h6 class="text-muted">Appointments</h6>
-                <h2 class="fw-bold text-warning">{{ total_appointments }}</h2>
+                    <h1>📅</h1>
+                    <h6 class="text-muted">Appointments</h6>
+                    <h2 class="fw-bold text-warning">{{ total_appointments }}</h2>
                 
+                </div>
             </div>
         </div>
-    </div>
 
         <!-- Pending -->
-        <div class="col-md-3">
+        <div class="col-lg-4 col-md-6">
             <div class="card shadow border-0 h-100">
                 <div class="card-body text-center">
-                <h1>⏳</h1>
-                <h6 class="text-muted">Pending</h6>
-                <h2 class="fw-bold text-danger">{{ pending_appointments }}</h2>
+                    <h1>⏳</h1>
+                    <h6 class="text-muted">Pending</h6>
+                    <h2 class="fw-bold text-danger">{{ pending_appointments }}</h2>
+                </div>
             </div>
         </div>
+
+          <!-- Departments -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card shadow border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <h1>🏢</h1>
+
+                    <h6 class="text-muted">
+                        Departments
+                    </h6>
+
+                    <h2 class="fw-bold text-info">
+
+                        {{ total_departments }}
+
+                    </h2>
+
+                </div>
+
+            </div>
         </div>
 
+
     </div>
-
-
+    
+  
 
  <!-- Recent Patients -->
 
@@ -442,6 +466,14 @@ Dashboard
 
                 <a href="{% url 'add_bill' %}" class="btn btn-danger">
                     💳 Create Bill
+                </a>
+
+            </div>
+
+            <div class="col-md-3 col-lg-2 mb-3 d-grid">
+
+                <a href="{% url 'add_department' %}" class="btn btn-secondary">
+                    🏢 Add Department
                 </a>
 
             </div>
