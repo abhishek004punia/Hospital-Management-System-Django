@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'prescriptions',
     'departments',
     'pharmacy',
+    'laboratory',
 ]
 
 MIDDLEWARE = [

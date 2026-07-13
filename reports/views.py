@@ -24,6 +24,7 @@ from datetime import datetime
 from django.db.models import Count, Sum
 from django.db.models.functions import ExtractMonth
 from pharmacy.models import Medicine
+from laboratory.models import LabTest
 
 
 def reports_dashboard(request):
@@ -568,4 +569,16 @@ def pharmacy_report(request):
         {
             "medicines": medicines
         }
+    )
+
+def laboratory_report(request):
+
+    tests = LabTest.objects.all()
+
+    return render(
+        request,
+        "reports/laboratory_report.html",
+        {
+            "tests": tests,
+        },
     )

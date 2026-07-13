@@ -37,4 +37,5 @@ urlpatterns = [
     #path("department/pdf/", views.department_report_pdf, name="department_report_pdf"),
     path("analytics/", views.analytics_dashboard, name="analytics_dashboard"),
     path("pharmacy/", views.pharmacy_report, name="pharmacy_report"),
+    path("laboratory/", views.laboratory_report, name="laboratory_report"),
 ]

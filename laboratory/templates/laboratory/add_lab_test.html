@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add Lab Test
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container mt-4">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-success text-white">
+
+                <h4>🧪 Add Lab Test</h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+                    <button
+                        type="submit"
+                        class="btn btn-success">
+
+                        💾 Save Test
+
+                    </button>
+
+                    <a href="{% url 'lab_test_list' %}"
+                       class="btn btn-secondary">
+
+                        ⬅ Back
+
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}

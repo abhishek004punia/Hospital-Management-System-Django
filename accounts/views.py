@@ -12,6 +12,7 @@ from users.forms import LoginForm
 from django.http import HttpResponseForbidden
 from pharmacy.models import Medicine
 from django.db.models import Q
+from laboratory.models import LabTest
 
 
 def login_view(request):
@@ -71,6 +72,7 @@ def dashboard(request):
     total_departments = Department.objects.count()
     total_medicines = Medicine.objects.count()
     low_stock_count = Medicine.objects.filter(stock__lt=20).count()
+    total_lab_tests = LabTest.objects.count()
 
     pending_appointments = Appointment.objects.filter(
         status="Pending"
@@ -82,20 +84,26 @@ def dashboard(request):
     # Today's Appointments
     today = timezone.localdate()
 
-    today_appointments = Appointment.objects.filter(
-        appointment_date=today
-    ).order_by("appointment_time")[:5]
+    today_appointments = Appointment.objects.order_by(
+        "-appointment_date",
+        "-appointment_time"
+    )[:5]
 
     # Recent Bills
     recent_bills = Billing.objects.order_by("-id")[:5]
 
     # Notifications
     notifications = [
-        {"icon": "🟢", "message": "New Patient Registered"},
-        {"icon": "📅", "message": "Appointment Booked"},
-        {"icon": "💳", "message": "Bill Generated"},
-        {"icon": "👨‍⚕️", "message": "Doctor Added"},
-    ]
+    {"icon": "🟢", "message": "New Patient Registered"},
+    {"icon": "👨‍⚕️", "message": "Doctor Added"},
+    {"icon": "📅", "message": "Appointment Booked"},
+    {"icon": "💳", "message": "Bill Generated"},
+    {"icon": "🏢", "message": "Department Added"},
+    {"icon": "💊", "message": "Medicine Added"},
+    {"icon": "🧪", "message": "Lab Test Added"},
+    {"icon": "📋", "message": "Prescription Created"},
+    {"icon": "📊", "message": "Reports Generated"},
+]
 
     # Recent Activity
     activities = [
@@ -106,18 +114,38 @@ def dashboard(request):
         },
         {
             "time": "09:40 AM",
-            "message": "Appointment Booked",
+            "message": "Doctor Added",
             "color": "primary",
         },
         {
-            "time": "10:20 AM",
-            "message": "Bill Generated",
+            "time": "10:00 AM",
+            "message": "Appointment Booked",
             "color": "warning",
         },
         {
-            "time": "11:10 AM",
-            "message": "Payment Received",
+            "time": "10:30 AM",
+            "message": "Bill Generated",
             "color": "info",
+        },
+        {
+            "time": "11:00 AM",
+            "message": "Department Added",
+            "color": "secondary",
+        },
+        {
+            "time": "11:20 AM",
+            "message": "Medicine Added",
+            "color": "success",
+        },
+        {
+            "time": "11:45 AM",
+            "message": "Lab Test Added",
+            "color": "danger",
+        },
+        {
+            "time": "12:00 PM",
+            "message": "Reports Generated",
+            "color": "dark",
         },
     ]
 
@@ -134,6 +162,7 @@ def dashboard(request):
         "recent_bills": recent_bills,
         "notifications": notifications,
         "activities": activities,
+        "total_lab_tests": total_lab_tests,
     }
 
     return render(

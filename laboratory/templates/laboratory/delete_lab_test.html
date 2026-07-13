@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Delete Lab Test
+{% endblock %}
+
+{% block content %}
+
+{% include 'includes/sidebar.html' %}
+
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+
+    <div class="container mt-4">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-danger text-white">
+
+                <h4>🗑 Delete Lab Test</h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <p class="fs-5">
+
+                    Are you sure you want to delete
+
+                    <strong>{{ test.test_name }}</strong>?
+
+                </p>
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <button type="submit"
+                            class="btn btn-danger">
+
+                        Yes, Delete
+
+                    </button>
+
+                    <a href="{% url 'lab_test_list' %}"
+                       class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% include 'includes/footer.html' %}
+
+{% endblock %}
