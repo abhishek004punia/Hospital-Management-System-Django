@@ -23,7 +23,7 @@ from django.db.models import Sum
 from datetime import datetime
 from django.db.models import Count, Sum
 from django.db.models.functions import ExtractMonth
-
+from pharmacy.models import Medicine
 
 
 def reports_dashboard(request):
@@ -556,4 +556,16 @@ def analytics_dashboard(request):
         request,
         "reports/analytics_dashboard.html",
         context
+    )
+
+def pharmacy_report(request):
+
+    medicines = Medicine.objects.all()
+
+    return render(
+        request,
+        "reports/pharmacy_report.html",
+        {
+            "medicines": medicines
+        }
     )
