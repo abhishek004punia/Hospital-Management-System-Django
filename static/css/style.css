@@ -119,6 +119,13 @@ body{
 .dashboard-card{
     text-align:center;
     padding:20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.dashboard-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0,0,0,.18);
 }
 
 .dashboard-card h2{
@@ -127,8 +134,9 @@ body{
     margin-top:10px;
 }
 
-.dashboard-card i{
-    font-size:40px;
+.dashboard-card i,
+.dashboard-card h1{
+    font-size:50px;
 }
 
 /* ===============================
@@ -329,3 +337,14 @@ body{
 
 }
 
+/* Quick Actions */
+
+.quick-actions .btn{
+    height:60px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:18px;
+    font-weight:600;
+    white-space:normal;
+}

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from departments.models import Department
+from reportlab.pdfgen import canvas
 
 from reportlab.platypus import (
     SimpleDocTemplate,
@@ -25,8 +26,11 @@ from django.db.models import Count, Sum
 from django.db.models.functions import ExtractMonth
 from pharmacy.models import Medicine
 from laboratory.models import LabTest
+from django.contrib.auth.decorators import login_required
+from accounts.decorators import admin_required
 
-
+@login_required
+@admin_required
 def reports_dashboard(request):
 
     context = {
@@ -48,7 +52,8 @@ def reports_dashboard(request):
         context
     )
 
-
+@login_required
+@admin_required
 def patient_report(request):
 
     patients = Patient.objects.all()
@@ -61,6 +66,9 @@ def patient_report(request):
         }
     )
 
+
+@login_required
+@admin_required
 def department_report(request):
 
     departments = Department.objects.all()
@@ -73,6 +81,9 @@ def department_report(request):
         }
     )
 
+
+@login_required
+@admin_required
 def patient_report_pdf(request):
 
     response = HttpResponse(content_type="application/pdf")
@@ -158,7 +169,8 @@ def patient_report_pdf(request):
 
     return response
 
-
+@login_required
+@admin_required
 def doctor_report(request):
 
     doctors = Doctor.objects.all()
@@ -171,6 +183,8 @@ def doctor_report(request):
         }
     )
 
+@login_required
+@admin_required
 def doctor_report_pdf(request):
 
     response = HttpResponse(content_type="application/pdf")
@@ -244,7 +258,8 @@ def doctor_report_pdf(request):
     return response
 
 
-
+@login_required
+@admin_required
 def appointment_report(request):
 
     appointments = Appointment.objects.all()
@@ -265,6 +280,9 @@ def appointment_report(request):
         }
     )
 
+
+@login_required
+@admin_required
 def appointment_report_pdf(request):
 
     response = HttpResponse(content_type="application/pdf")
@@ -325,6 +343,9 @@ def appointment_report_pdf(request):
 
     return response
 
+
+@login_required
+@admin_required
 def billing_report(request):
 
     bills = Billing.objects.all()
@@ -351,7 +372,8 @@ def billing_report(request):
     )
 
 
-
+@login_required
+@admin_required
 def monthly_report(request):
 
     month = request.GET.get("month")
@@ -406,6 +428,9 @@ def monthly_report(request):
         context
     )
 
+
+@login_required
+@admin_required
 def billing_report_pdf(request):
 
     response = HttpResponse(content_type="application/pdf")
@@ -466,6 +491,8 @@ def billing_report_pdf(request):
 
     return response
 
+@login_required
+@admin_required
 def analytics_dashboard(request):
 
     total_patients = Patient.objects.count()
@@ -559,6 +586,9 @@ def analytics_dashboard(request):
         context
     )
 
+
+@login_required
+@admin_required
 def pharmacy_report(request):
 
     medicines = Medicine.objects.all()
@@ -571,6 +601,9 @@ def pharmacy_report(request):
         }
     )
 
+
+@login_required
+@admin_required
 def laboratory_report(request):
 
     tests = LabTest.objects.all()
@@ -582,3 +615,210 @@ def laboratory_report(request):
             "tests": tests,
         },
     )
+
+
+
+def department_report_pdf(request):
+
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = 'attachment; filename="department_report.pdf"'
+
+    p = canvas.Canvas(response)
+
+    p.setFont("Helvetica-Bold", 16)
+    p.drawString(180, 800, "Department Report")
+
+    p.setFont("Helvetica", 12)
+
+    y = 760
+
+    departments = Department.objects.all()
+
+    for dept in departments:
+
+        p.drawString(
+            50,
+            y,
+            f"{dept.department_name} | {dept.department_head} | {dept.location}"
+        )
+
+        y -= 20
+
+        if y < 50:
+            p.showPage()
+            p.setFont("Helvetica", 12)
+            y = 800
+
+    p.save()
+
+    return response
+
+
+def pharmacy_report_pdf(request):
+
+    response = HttpResponse(content_type="application/pdf")
+
+    response["Content-Disposition"] = (
+        'attachment; filename="pharmacy_report.pdf"'
+    )
+
+    p = canvas.Canvas(response)
+
+    # Title
+    p.setFont("Helvetica-Bold", 18)
+    p.drawString(180, 800, "Hospital Management System")
+
+    p.setFont("Helvetica-Bold", 16)
+    p.drawString(210, 775, "Pharmacy Report")
+
+    # Header
+    y = 740
+
+    p.setFont("Helvetica-Bold", 11)
+
+    p.drawString(30, y, "ID")
+    p.drawString(70, y, "Medicine")
+    p.drawString(220, y, "Manufacturer")
+    p.drawString(340, y, "Category")
+    p.drawString(430, y, "Price")
+    p.drawString(500, y, "Stock")
+
+    y -= 20
+
+    p.setFont("Helvetica", 10)
+
+    medicines = Medicine.objects.all()
+
+    for medicine in medicines:
+
+        p.drawString(30, y, str(medicine.medicine_id))
+        p.drawString(70, y, medicine.medicine_name[:20])
+        p.drawString(220, y, medicine.manufacturer[:18])
+        p.drawString(340, y, medicine.category[:12])
+        p.drawString(430, y, str(medicine.price))
+        p.drawString(500, y, str(medicine.stock))
+
+        y -= 20
+
+        # New Page
+        if y < 50:
+
+            p.showPage()
+
+            y = 800
+
+            p.setFont("Helvetica-Bold", 11)
+
+            p.drawString(30, y, "ID")
+            p.drawString(70, y, "Medicine")
+            p.drawString(220, y, "Manufacturer")
+            p.drawString(340, y, "Category")
+            p.drawString(430, y, "Price")
+            p.drawString(500, y, "Stock")
+
+            y -= 20
+
+            p.setFont("Helvetica", 10)
+
+    p.save()
+
+    return response
+
+
+def monthly_report_pdf(request):
+
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = (
+        'attachment; filename="monthly_report.pdf"'
+    )
+
+    p = canvas.Canvas(response)
+
+    p.setFont("Helvetica-Bold", 18)
+    p.drawString(170, 800, "Hospital Management System")
+
+    p.setFont("Helvetica-Bold", 16)
+    p.drawString(220, 775, "Monthly Report")
+
+    y = 740
+
+    p.setFont("Helvetica-Bold", 11)
+
+    p.drawString(40, y, "Bill ID")
+    p.drawString(120, y, "Patient")
+    p.drawString(280, y, "Doctor")
+    p.drawString(430, y, "Amount")
+
+    y -= 20
+
+    p.setFont("Helvetica", 10)
+
+    bills = Billing.objects.all()
+
+    for bill in bills:
+
+        p.drawString(40, y, str(bill.bill_id))
+        p.drawString(120, y, bill.patient.full_name[:20])
+        p.drawString(280, y, bill.doctor.full_name[:20])
+        p.drawString(430, y, str(bill.total_amount))
+
+        y -= 20
+
+        if y < 50:
+            p.showPage()
+            y = 800
+
+            p.setFont("Helvetica-Bold", 11)
+
+            p.drawString(40, y, "Bill ID")
+            p.drawString(120, y, "Patient")
+            p.drawString(280, y, "Doctor")
+            p.drawString(430, y, "Amount")
+
+            y -= 20
+            p.setFont("Helvetica", 10)
+
+    p.save()
+
+    return response
+
+
+def analytics_pdf(request):
+
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = (
+        'attachment; filename="analytics_dashboard.pdf"'
+    )
+
+    p = canvas.Canvas(response)
+
+    p.setFont("Helvetica-Bold", 18)
+    p.drawString(140, 800, "Hospital Management System")
+
+    p.setFont("Helvetica-Bold", 16)
+    p.drawString(200, 775, "Analytics Dashboard")
+
+    p.setFont("Helvetica", 12)
+
+    y = 730
+
+    p.drawString(60, y, f"Total Patients : {Patient.objects.count()}")
+    y -= 25
+
+    p.drawString(60, y, f"Total Doctors : {Doctor.objects.count()}")
+    y -= 25
+
+    p.drawString(60, y, f"Total Appointments : {Appointment.objects.count()}")
+    y -= 25
+
+    p.drawString(60, y, f"Total Bills : {Billing.objects.count()}")
+    y -= 25
+
+    p.drawString(60, y, f"Total Medicines : {Medicine.objects.count()}")
+    y -= 25
+
+    p.drawString(60, y, f"Total Lab Tests : {LabTest.objects.count()}")
+
+    p.save()
+
+    return response

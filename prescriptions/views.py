@@ -1,9 +1,11 @@
-
+from django.contrib.auth.decorators import login_required
+from accounts.decorators import prescription_access_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Prescription
 from .forms import PrescriptionForm
 
-
+@login_required
+@prescription_access_required
 def add_prescription(request):
 
     if request.method == "POST":
@@ -21,7 +23,8 @@ def add_prescription(request):
         "form": form
     })
 
-
+@login_required
+@prescription_access_required
 def prescription_list(request):
 
     prescriptions = Prescription.objects.all().order_by("-id")
@@ -30,7 +33,8 @@ def prescription_list(request):
         "prescriptions": prescriptions
     })
 
-
+@login_required
+@prescription_access_required
 def prescription_detail(request, id):
 
     prescription = get_object_or_404(Prescription, id=id)
@@ -39,7 +43,8 @@ def prescription_detail(request, id):
         "prescription": prescription
     })
 
-
+@login_required
+@prescription_access_required
 def edit_prescription(request, id):
 
     prescription = get_object_or_404(Prescription, id=id)
@@ -59,7 +64,8 @@ def edit_prescription(request, id):
         "form": form
     })
 
-
+@login_required
+@prescription_access_required
 def delete_prescription(request, id):
 
     prescription = get_object_or_404(Prescription, id=id)

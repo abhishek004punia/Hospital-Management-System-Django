@@ -3,9 +3,13 @@ from django.db.models import Q
 
 from .models import LabTest
 from .forms import LabTestForm
+from django.contrib.auth.decorators import login_required
+from accounts.decorators import laboratory_access_required
 
 
 # Add Lab Test
+@login_required
+@laboratory_access_required
 def add_lab_test(request):
 
     if request.method == "POST":
@@ -32,6 +36,8 @@ def add_lab_test(request):
 
 
 # Lab Test List
+@login_required
+@laboratory_access_required
 def lab_test_list(request):
 
     query = request.GET.get("q")
@@ -57,6 +63,8 @@ def lab_test_list(request):
 
 
 # Lab Test Detail
+@login_required
+@laboratory_access_required
 def lab_test_detail(request, id):
 
     test = get_object_or_404(
@@ -74,6 +82,8 @@ def lab_test_detail(request, id):
 
 
 # Edit Lab Test
+@login_required
+@laboratory_access_required
 def edit_lab_test(request, id):
 
     test = get_object_or_404(
@@ -110,6 +120,8 @@ def edit_lab_test(request, id):
 
 
 # Delete Lab Test
+@login_required
+@laboratory_access_required
 def delete_lab_test(request, id):
 
     test = get_object_or_404(

@@ -5,7 +5,7 @@
     </h3>
 
     <ul class="nav flex-column">
-
+      <!-- Everyone -->
         <li class="nav-item mb-2">
             <a href="{% url 'dashboard' %}" class="nav-link">
                 <i class="bi bi-house-door-fill"></i>
@@ -20,6 +20,9 @@
             </a>
         </li>
 
+         <!-- Admin + Receptionist -->
+        {% if "Admin" in user_groups or "Receptionist" in user_groups %}
+
         <li class="nav-item mb-2">
             <a href="{% url 'patient_list' %}" class="nav-link">
                 <i class="bi bi-people-fill"></i>
@@ -27,52 +30,29 @@
             </a>
         </li>
 
-        <li class="nav-item mb-2">
-            <a href="{% url 'doctor_list' %}" class="nav-link">
-                <i class="bi bi-person-badge-fill"></i>
-                Doctors
-            </a>
-        </li>
-
-        <li class="nav-item mb-2">
-            <a href="{% url 'appointment_list' %}" class="nav-link">
-                <i class="bi bi-calendar-check-fill"></i>
-                Appointments
-            </a>
-        </li>
-
-        <li class="nav-item mb-2">
+         <li class="nav-item mb-2">
             <a href="{% url 'bill_list' %}" class="nav-link">
                 <i class="bi bi-cash-stack"></i>
                 Billing
             </a>
         </li>
 
-        <li class="nav-item mb-2">
-            <a href="{% url 'reports_dashboard' %}" class="nav-link">
-                <i class="bi bi-bar-chart-fill"></i>
-                Reports
-            </a>
-        </li>
-        
-        <li class="nav-item mb-2">
-            <a href="{% url 'department_list' %}" class="nav-link">
-                <i class="bi bi-building"></i>
-                    Departments
-            </a>
-        </li>
-
-        <li class="nav-item mb-2">
+         <li class="nav-item mb-2">
             <a href="{% url 'medicine_list' %}" class="nav-link">
                 <i class="bi bi-capsule"></i>
                 Pharmacy
             </a>
         </li>
 
+
+        {% endif %}
+
+          <!-- Admin + Doctor -->
+        {% if "Admin" in user_groups or "Doctor" in user_groups %}
         <li class="nav-item mb-2">
-            <a href="{% url 'lab_test_list' %}" class="nav-link">
-                <i class="bi bi-eyedropper"></i>
-                Laboratory
+            <a href="{% url 'doctor_list' %}" class="nav-link">
+                <i class="bi bi-person-badge-fill"></i>
+                Doctors
             </a>
         </li>
 
@@ -83,6 +63,46 @@
             </a>
         </li>
 
+        <li class="nav-item mb-2">
+            <a href="{% url 'lab_test_list' %}" class="nav-link">
+                <i class="bi bi-eyedropper"></i>
+                Laboratory
+            </a>
+        </li>
+
+        {% endif %}
+
+        <!-- All Roles -->
+        {% if "Admin" in user_groups or "Doctor" in user_groups or "Receptionist" in user_groups %}
+
+        <li class="nav-item mb-2">
+            <a href="{% url 'appointment_list' %}" class="nav-link">
+                <i class="bi bi-calendar-check-fill"></i>
+                Appointments
+            </a>
+        </li>
+
+         {% endif %}
+
+          <!-- Admin Only -->
+        {% if "Admin" in user_groups %}
+
+         <li class="nav-item mb-2">
+            <a href="{% url 'department_list' %}" class="nav-link">
+                <i class="bi bi-building"></i>
+                    Departments
+            </a>
+        </li>
+
+        <li class="nav-item mb-2">
+            <a href="{% url 'reports_dashboard' %}" class="nav-link">
+                <i class="bi bi-bar-chart-fill"></i>
+                Reports
+            </a>
+        </li>
+
+        {% endif %}
+        
     </ul>
 
 </div>

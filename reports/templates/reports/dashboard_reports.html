@@ -20,46 +20,46 @@ Reports Dashboard
 
         <div class="row g-4">
 
-            <div class="col-md-3">
-                <div class="card shadow text-center p-4">
+            <div class="col-xl-3 col-lg-4 col-md-6 md-4">
+                <div class="card shadow border-start border-primary border-4 h-100 dashboard-card">
                     <h1>👥</h1>
-                    <h2>{{ total_patients }}</h2>
-                    <p>Total Patients</p>
+                    <h2 class="fw-bold text-primary">{{ total_patients }}</h2>
+                    <p class="text-muted">Total Patients</p>
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="card shadow text-center p-4">
+            <div class="col-xl-3 col-lg-4 col-md-6 md-4">
+                <div class="card shadow border-start border-success border-4 h-100 dashboard-card">
                     <h1>👨‍⚕️</h1>
-                    <h2>{{ total_doctors }}</h2>
-                    <p>Total Doctors</p>
+                    <h2 class="fw-bold text-success">{{ total_doctors }}</h2>
+                    <p class="text-muted">Total Doctors</p>
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="card shadow text-center p-4">
+            <div class="col-xl-3 col-lg-4 col-md-6 md-4">
+                <div class="card shadow border-start border-warning border-4 h-100 dashboard-card">
                     <h1>📅</h1>
-                    <h2>{{ total_appointments }}</h2>
-                    <p>Total Appointments</p>
+                    <h2 class="fw-bold text-warning">{{ total_appointments }}</h2>
+                    <p class="text-muted">Total Appointments</p>
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="card shadow text-center p-4">
+            <div class="col-xl-3 col-lg-4 col-md-6 md-4">
+                <div class="card shadow border-start border-dark border-4 h-100 dashboard-card">
                     <h1>💳</h1>
-                    <h2>{{ total_bills }}</h2>
-                    <p>Total Bills</p>
+                    <h2 class="fw-bold text-info">{{ total_bills }}</h2>
+                    <p class="text-muted">Total Bills</p>
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="card shadow text-center p-4">
+            <div class="col-xl-3 col-lg-4 col-md-6 md-4">
+                <div class="card shadow border-start border-danger border-4 h-100 dashboard-card">
 
                     <h1>🏢</h1>
 
-                    <h2>{{ total_departments }}</h2>
+                    <h2 class="fw-bold text-danger">{{ total_departments }}</h2>
 
-                    <p>Total Departments</p>
+                    <p class="text-muted">Total Departments</p>
 
                 </div>
             </div>
@@ -112,9 +112,7 @@ Reports Dashboard
 
             </a>
 
-            <a href="{% url 'department_report' %}" class="btn btn-secondary ms-2">
-                🏢 Department Report
-            </a>
+           
 
         </div>
 

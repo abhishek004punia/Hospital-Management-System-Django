@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Billing
 from .forms import BillingForm
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from accounts.decorators import billing_access_required
 
-
+@login_required
+@billing_access_required
 def add_bill(request):
 
     if request.method == "POST":
@@ -20,7 +23,8 @@ def add_bill(request):
         'form': form
     })
 
-
+@login_required
+@billing_access_required
 def bill_list(request):
 
     query = request.GET.get("q")
@@ -43,7 +47,8 @@ def bill_list(request):
         }
     )
 
-
+@login_required
+@billing_access_required
 def bill_detail(request, id):
 
     bill = get_object_or_404(Billing, id=id)
@@ -52,7 +57,8 @@ def bill_detail(request, id):
         'bill': bill
     })
 
-
+@login_required
+@billing_access_required
 def edit_bill(request, id):
 
     bill = get_object_or_404(Billing, id=id)
@@ -73,7 +79,8 @@ def edit_bill(request, id):
         'bill': bill
     })
 
-
+@login_required
+@billing_access_required
 def delete_bill(request, id):
 
     bill = get_object_or_404(Billing, id=id)
@@ -86,7 +93,8 @@ def delete_bill(request, id):
         'bill': bill
     })
 
-
+@login_required
+@billing_access_required
 def print_bill(request, id):
     bill = get_object_or_404(Billing, id=id)
     return render(request, "billing/print_bill.html", {

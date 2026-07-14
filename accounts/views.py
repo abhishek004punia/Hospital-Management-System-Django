@@ -13,6 +13,7 @@ from django.http import HttpResponseForbidden
 from pharmacy.models import Medicine
 from django.db.models import Q
 from laboratory.models import LabTest
+from .decorators import admin_required
 
 
 def login_view(request):
@@ -40,12 +41,20 @@ def login_view(request):
 
                 login(request, user)
 
-                return redirect("dashboard")
+                if user.groups.filter(name="Admin").exists():
+                    return redirect("dashboard")
 
-            else:
+                elif user.groups.filter(name="Doctor").exists():
+                    return redirect("doctor_dashboard")
 
-                message = "Invalid Username or Password"
+                elif user.groups.filter(name="Receptionist").exists():
+                    return redirect("reception_dashboard")
 
+                else:
+                    logout(request)
+                    message = "No role assigned to this user."
+
+            
     return render(
         request,
         "accounts/login.html",
@@ -57,6 +66,7 @@ def login_view(request):
 
 
 @login_required(login_url="/users/login/")
+@admin_required
 def dashboard(request):
 
     print("Logged in user:", request.user.username)

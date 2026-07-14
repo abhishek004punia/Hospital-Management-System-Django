@@ -3,9 +3,12 @@ from django.db.models import Q
 
 from .models import Medicine
 from .forms import MedicineForm
-
+from django.contrib.auth.decorators import login_required
+from accounts.decorators import pharmacy_access_required
 
 # Add Medicine
+@login_required
+@pharmacy_access_required
 def add_medicine(request):
 
     if request.method == "POST":
@@ -32,6 +35,8 @@ def add_medicine(request):
 
 
 # Medicine List
+@login_required
+@pharmacy_access_required
 def medicine_list(request):
 
     query = request.GET.get("q")
@@ -57,6 +62,8 @@ def medicine_list(request):
 
 
 # Medicine Detail
+@login_required
+@pharmacy_access_required
 def medicine_detail(request, id):
 
     medicine = get_object_or_404(
@@ -74,6 +81,8 @@ def medicine_detail(request, id):
 
 
 # Edit Medicine
+@login_required
+@pharmacy_access_required
 def edit_medicine(request, id):
 
     medicine = get_object_or_404(
@@ -110,6 +119,8 @@ def edit_medicine(request, id):
 
 
 # Delete Medicine
+@login_required
+@pharmacy_access_required
 def delete_medicine(request, id):
 
     medicine = get_object_or_404(

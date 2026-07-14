@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PatientForm
 from .models import Patient
+from django.contrib.auth.decorators import login_required
+from accounts.decorators import patient_access_required
 
-
+@login_required
+@patient_access_required
 def add_patient(request):
 
     if request.method == "POST":
@@ -20,6 +23,8 @@ def add_patient(request):
     })
 
 
+@login_required
+@patient_access_required
 def patient_list(request):
 
     search = request.GET.get('search')
@@ -36,6 +41,8 @@ def patient_list(request):
         'patients': patients
     })
 
+@login_required
+@patient_access_required
 def patient_detail(request, id):
 
     patient = get_object_or_404(Patient, id=id)
@@ -44,6 +51,8 @@ def patient_detail(request, id):
         'patient': patient
     })
 
+@login_required
+@patient_access_required
 def edit_patient(request, id):
 
     patient = get_object_or_404(Patient, id=id)
@@ -62,6 +71,8 @@ def edit_patient(request, id):
         'form': form
     })
 
+@login_required
+@patient_access_required
 def delete_patient(request, id):
 
     patient = get_object_or_404(Patient, id=id)

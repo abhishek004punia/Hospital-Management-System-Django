@@ -1,15 +1,397 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Reception Dashboard</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-<h1>🧑‍💼 Reception Dashboard</h1>
+{% block title %}
+Dashboard
+{% endblock %}
 
-<p>Welcome Receptionist</p>
+{% block content %}
 
-<a href="/users/logout/">Logout</a>
+{% include 'includes/sidebar.html' %}
 
-</body>
-</html>
+<div class="main-content">
+
+    {% include 'includes/navbar.html' %}
+     <div class="container-fluid mt-4">
+
+        <!--Header-->
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold">🏥 Hospital Dashboard</h2>
+
+            <p class="text-muted">
+                Welcome to Hospital Management System
+            </p>
+
+        </div>
+
+        <div>
+
+            <a href="/reports/analytics/" class="btn btn-outline-primary">
+                📊 Analytics
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Statistics Cards -->
+<div class="row g-4">
+
+    <!-- Patients -->
+    <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+        <div class="card shadow border-start border-primary border-4 h-100 dashboard-card">
+            <div class="card-body text-center">
+                <h1>👥</h1>
+                <h6 class="text-muted">Patients</h6>
+                <h2 class="fw-bold text-primary">{{ total_patients }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Appointments -->
+    <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+        <div class="card shadow border-start border-warning border-4 h-100 dashboard-card">
+            <div class="card-body text-center">
+                <h1>📅</h1>
+                <h6 class="text-muted">Appointments</h6>
+                <h2 class="fw-bold text-warning">{{ total_appointments }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bills -->
+    <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+        <div class="card shadow border-start border-success border-4 h-100 dashboard-card">
+            <div class="card-body text-center">
+                <h1>💳</h1>
+                <h6 class="text-muted">Bills</h6>
+                <h2 class="fw-bold text-success">{{ total_bills }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Medicines -->
+    <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+        <div class="card shadow border-start border-info border-4 h-100 dashboard-card">
+            <div class="card-body text-center">
+                <h1>💊</h1>
+                <h6 class="text-muted">Medicines</h6>
+                <h2 class="fw-bold text-info">{{ total_medicines }}</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    
+  
+
+ <!-- Recent Patients -->
+
+<div class="card shadow mt-5">
+
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+
+        <h4 class="mb-0">👥 Recent Patients</h4>
+
+        <a href="{% url 'patient_list'%}" class="btn btn-light btn-sm">
+            👁 View All
+        </a>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-primary">
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Disease</th>
+                        <th>Mobile</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for patient in recent_patients %}
+
+                    <tr>
+
+                        <td>{{ patient.patient_id }}</td>
+
+                        <td>{{ patient.full_name }}</td>
+
+                        <td>{{ patient.age }}</td>
+
+                        <td>{{ patient.disease }}</td>
+
+                        <td>{{ patient.mobile }}</td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td colspan="5" class="text-center">
+
+                            No Patients Found
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Today's Appointments -->
+<div class="card shadow mt-5">
+
+    <div class="card-header bg-success text-white  d-flex justify-content-between align-items-center">
+
+        <h4>📅 Today's Appointments</h4>
+
+        <a href="{% url 'appointment_list' %}" class="btn btn-light btn-sm">
+           👁 View All
+        </a>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-primary">
+
+                    <tr>
+
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Time</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for appointment in today_appointments %}
+
+                    <tr>
+
+                        <td>{{ appointment.patient.full_name }}</td>
+
+                        <td>{{ appointment.doctor.full_name }}</td>
+
+                        <td>{{ appointment.appointment_time }}</td>
+
+                        <td>
+
+                            {% if appointment.status == "Completed" %}
+
+                                <span class="badge bg-success">
+                                    Completed
+                                </span>
+
+                            {% elif appointment.status == "Pending" %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Pending
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-danger">
+                                    Cancelled
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td colspan="4" class="text-center">
+
+                            No Appointments Today
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Notifications -->
+
+<div class="card shadow mt-5">
+
+    <div class="card-header bg-info text-white">
+
+        <h4 class="mb-0">🔔 Notifications</h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <ul class="list-group">
+
+            {% for note in notifications %}
+
+            <li class="list-group-item d-flex align-items-center">
+
+                <span class="me-3 fs-4">
+
+                    {{ note.icon }}
+
+                </span>
+
+                {{ note.message }}
+
+            </li>
+
+            {% empty %}
+
+            <li class="list-group-item text-center">
+
+                No Notifications
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+</div>
+
+<div class="card shadow mt-4">
+
+    <div class="card-header bg-secondary text-white">
+        <h4>⚡ Quick Actions</h4>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-3 mb-3 d-grid">
+                <a href="{% url 'prescription_list' %}" class="btn btn-success">
+                    📋 Prescriptions
+                </a>
+            </div>
+
+            <div class="col-md-3 mb-3 d-grid">
+                <a href="{% url 'lab_test_list' %}" class="btn btn-danger">
+                    🧪 Laboratory
+                </a>
+            </div>
+
+            <div class="col-md-3 mb-3 d-grid">
+                <a href="{% url 'appointment_list' %}" class="btn btn-warning">
+                    📅 Appointments
+                </a>
+            </div>
+
+            <div class="col-md-3 mb-3 d-grid">
+                <a href="{% url 'patient_list' %}" class="btn btn-primary">
+                    👥 Patients
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Recent Activity -->
+<div class="card shadow mt-5">
+
+    <div class="card-header bg-dark text-white">
+
+        <h4 class="mb-0">🕒 Recent Activity</h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <ul class="list-group">
+
+            {% for activity in activities %}
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <span class="badge bg-{{ activity.color }} me-2">
+                        {{ activity.time }}
+                    </span>
+
+                    {{ activity.message }}
+
+                </div>
+
+            </li>
+            {% empty %}
+
+            <li class="list-group-item text-center">
+
+                No Recent Activity
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+</div>
+
+<!-- Footer -->
+{% include 'includes/footer.html' %}
+
+ </div> <!-- container-fluid -->
+
+</div> <!-- main-content -->
+{% endblock %}

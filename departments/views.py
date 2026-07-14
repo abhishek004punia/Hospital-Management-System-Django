@@ -3,9 +3,13 @@ from django.db.models import Q
 
 from .models import Department
 from .forms import DepartmentForm
+from django.contrib.auth.decorators import login_required
+from accounts.decorators import admin_required
 
 
 # Add Department
+@login_required
+@admin_required
 def add_department(request):
 
     if request.method == "POST":
@@ -27,6 +31,8 @@ def add_department(request):
 
 
 # Department List
+@login_required
+@admin_required
 def department_list(request):
 
     query = request.GET.get("q")
@@ -54,6 +60,8 @@ def department_list(request):
 
 
 # Department Detail
+@login_required
+@admin_required
 def department_detail(request, id):
 
     department = get_object_or_404(
@@ -71,6 +79,8 @@ def department_detail(request, id):
 
 
 # Edit Department
+@login_required
+@admin_required
 def edit_department(request, id):
 
     department = get_object_or_404(
@@ -105,6 +115,8 @@ def edit_department(request, id):
 
 
 # Delete Department
+@login_required
+@admin_required
 def delete_department(request, id):
 
     department = get_object_or_404(

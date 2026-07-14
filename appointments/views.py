@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from .forms import AppointmentForm
 from .models import Appointment
+from django.contrib.auth.decorators import login_required
+from accounts.decorators import appointment_access_required
 
-
+@login_required
+@appointment_access_required
 def add_appointment(request):
 
     if request.method == "POST":
@@ -22,6 +25,8 @@ def add_appointment(request):
         'form': form
     })
 
+@login_required
+@appointment_access_required
 def appointment_list(request):
 
     query = request.GET.get("q")
@@ -52,6 +57,8 @@ def appointment_list(request):
         }
     )
 
+@login_required
+@appointment_access_required
 def appointment_detail(request, id):
 
     appointment = get_object_or_404(
@@ -67,6 +74,8 @@ def appointment_detail(request, id):
         }
     )
 
+@login_required
+@appointment_access_required
 def edit_appointment(request, id):
 
     appointment = get_object_or_404(
@@ -99,6 +108,8 @@ def edit_appointment(request, id):
         }
     )
 
+@login_required
+@appointment_access_required
 def delete_appointment(request, id):
 
     appointment = get_object_or_404(
